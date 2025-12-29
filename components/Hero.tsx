@@ -26,7 +26,7 @@ const Hero: React.FC = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Monet-inspired palette (Impression, Sunrise)
+    // Tree-inspired palette
     const colors = [
       "rgba(224,138,62,0.6)",   // orange tones
       "rgba(125,158,192,0.4)",  // blue tones
