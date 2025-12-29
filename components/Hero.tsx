@@ -1,9 +1,18 @@
 "use client";
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const splitLetters = (text: string) => text.split("");
 
 const Hero: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [typedChars1, setTypedChars1] = useState(0);
+  const [typedChars2, setTypedChars2] = useState(0);
+  const [typedChars3, setTypedChars3] = useState(0);
+
+  const line1 = "Hello, I'm Ilani";
+  const line2 = "I am a full stack";
+  const line3 = "software developer.";
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -33,7 +42,7 @@ const Hero: React.FC = () => {
       swayOffset: number;
     }[] = [];
 
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < 200; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -80,27 +89,116 @@ const Hero: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Typing animation for line 1
+  useEffect(() => {
+    if (typedChars1 < line1.length) {
+      const timer = setTimeout(() => {
+        setTypedChars1(typedChars1 + 1);
+      }, 80);
+      return () => clearTimeout(timer);
+    } else if (typedChars2 < line2.length) {
+      const timer = setTimeout(() => {
+        setTypedChars2(typedChars2 + 1);
+      }, 80);
+      return () => clearTimeout(timer);
+    } else if (typedChars3 < line3.length) {
+      const timer = setTimeout(() => {
+        setTypedChars3(typedChars3 + 1);
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [typedChars1, typedChars2, typedChars3]);
+
+  // Framer Motion variants for letter animation
+  const letterVariants = {
+    initial: { color: "#D3E4E4" },
+    hover: { color: "#FFC459" }, // orange
+  };
+
+  const showCursor = typedChars3 < line3.length;
+
   return (
+    // Hero Section with Background Image and Canvas Overlay
     <div className="relative h-screen w-screen flex justify-center items-center overflow-hidden">
       <img
         src="/flamboyan.jpg"
         alt="Flamboyan"
         className="absolute top-0 left-0 w-full h-full object-cover overflow-hidden"
       />
+      
+      {/* Canvas for Particle Animation */}
       <canvas
         ref={canvasRef}
         className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden"
       ></canvas>
 
       <motion.div
-        className="z-10 text-center relative mt-40 -translate-y-0 -translate-x-130 overflow-hidden"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
+        className="z-10 text-center relative mt-50 -translate-x-140 overflow-hidden"
+        initial={{ opacity: 0}}
+        animate={{ opacity: 1}}
         transition={{ duration: 2 }}
+        whileHover="hover"
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Hi, I'm Ilani</h1>
-        <p className="text-2xl md:text-3xl">I am a full stack</p>
-        <p className="text-2xl md:text-3xl">software developer.</p>
+        <h1 className="text-5xl font-bold mb-4">
+          {splitLetters(line1).map((letter, index) => (
+            index < typedChars1 ? (
+              <motion.span
+                key={index}
+                variants={letterVariants}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </motion.span>
+            ) : null
+          ))}
+          {typedChars1 <= line1.length && typedChars2 === 0 && (
+            <motion.span
+              className="inline-block w-0.5 h-12 bg-[#FFC459] ml-1"
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+            />
+          )}
+        </h1>
+        <p className="text-4xl text-[#D3E4E4]">
+          {splitLetters(line2).map((letter, index) => (
+            index < typedChars2 ? (
+              <motion.span
+                key={index}
+                variants={letterVariants}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </motion.span>
+            ) : null
+          ))}
+          {typedChars2 > 0 && typedChars2 <= line2.length && typedChars3 === 0 && (
+            <motion.span
+              className="inline-block w-0.5 h-10 bg-[#FFC459] ml-1"
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+            />
+          )}
+        </p>
+        <p className="text-4xl text-[#D3E4E4]">
+          {splitLetters(line3).map((letter, index) => (
+            index < typedChars3 ? (
+              <motion.span
+                key={index}
+                variants={letterVariants}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </motion.span>
+            ) : null
+          ))}
+          {typedChars3 > 0 && typedChars3 <= line3.length && (
+            <motion.span
+              className="inline-block w-0.5 h-10 bg-[#FFC459] ml-1"
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+            />
+          )}
+        </p>
       </motion.div>
     </div>
   );
