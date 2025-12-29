@@ -119,7 +119,7 @@ const Hero: React.FC = () => {
 
   return (
     // Hero Section with Background Image and Canvas Overlay
-    <div className="relative h-screen w-screen flex justify-center items-center overflow-hidden">
+    <div className="relative h-screen w-full flex justify-center items-center overflow-hidden">
       <img
         src="/flamboyan.jpg"
         alt="Flamboyan"
@@ -133,7 +133,7 @@ const Hero: React.FC = () => {
       ></canvas>
 
       <motion.div
-        className="z-10 text-center relative mt-50 -translate-x-140 overflow-hidden"
+        className="z-10 text-center relative mt-50 -translate-x-132 overflow-hidden"
         initial={{ opacity: 0}}
         animate={{ opacity: 1}}
         transition={{ duration: 2 }}
