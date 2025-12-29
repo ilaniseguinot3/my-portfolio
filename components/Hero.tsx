@@ -83,8 +83,8 @@ const Hero: React.FC = () => {
   return (
     <div className="relative h-screen w-screen flex justify-center items-center overflow-hidden">
       <img
-        src="/monet.jpg"
-        alt="Impression, Sunrise"
+        src="/flamboyan.jpg"
+        alt="Flamboyan"
         className="absolute top-0 left-0 w-full h-full object-cover overflow-hidden"
       />
       <canvas
@@ -93,13 +93,14 @@ const Hero: React.FC = () => {
       ></canvas>
 
       <motion.div
-        className="z-10 text-center relative -translate-y-10 overflow-hidden"
+        className="z-10 text-center relative mt-40 -translate-y-0 -translate-x-130 overflow-hidden"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 2 }}
       >
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Hi, I'm Ilani</h1>
-        <p className="text-2xl md:text-3xl">I am a full stack software developer.</p>
+        <p className="text-2xl md:text-3xl">I am a full stack</p>
+        <p className="text-2xl md:text-3xl">software developer.</p>
       </motion.div>
     </div>
   );
