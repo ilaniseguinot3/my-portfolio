@@ -26,29 +26,32 @@ const About: React.FC = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.2 },
     },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen bg-gradient-to-b from-[#849F8C] to-[#849F8C] py-20 px-6"
+      className="relative min-h-screen bg-gradient-to-b from-[#849F8C] to-[#849F8C] py-20 px-6 overflow-hidden"
       onMouseMove={handleMouseMove}
     >
+      {/* Aura Effect */}
+      <div
+        className="pointer-events-none absolute inset-0 transition duration-75"
+        style={{
+          background: `radial-gradient(500px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.18), transparent 50%)`,
+          mixBlendMode: "overlay",
+        }}
+      />
+
       <motion.div
-        className="max-w-6xl mx-auto"
+        className="relative max-w-6xl mx-auto z-10"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -56,7 +59,7 @@ const About: React.FC = () => {
       >
         {/* Section Title */}
         <motion.h2
-          className="text-5xl font-bold text-center mb-16 text-white"
+          className="text-5xl font-bold text-center mb-16 text-[#F6F4D2]"
           variants={itemVariants}
         >
           About Me
@@ -65,128 +68,88 @@ const About: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-12 items-start">
           {/* Left Column - Introduction */}
           <motion.div variants={itemVariants} className="space-y-6">
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-              <h3 className="text-3xl font-semibold text-[#FFC459] mb-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+              <h3 className="text-3xl font-semibold text-[#F6F4D2] mb-4">
                 Hi, I'm Ilani Seguinot
               </h3>
               <p className="text-[#3A3A3A] text-lg leading-relaxed mb-4">
-                I'm a Computer Science and Digital Arts & Sciences student at the University of Florida, 
-                graduating in May 2027. As a Benacquisto Scholar and National Merit Finalist with a 3.81 GPA, 
+                I'm a Computer Science and Digital Arts & Sciences student at the University of Florida,
+                graduating in May 2027. As a Benacquisto Scholar and National Merit Finalist with a 3.81 GPA,
                 I'm passionate about creating innovative software solutions that blend technical excellence with creative design.
               </p>
               <p className="text-[#3A3A3A] text-lg leading-relaxed">
-                My journey spans full-stack web development, game design, 3D modeling, and mobile app creation. 
-                I love building user-centered experiences that solve real problems—from marketplaces for campus 
+                My journey spans full-stack web development, game design, 3D modeling, and mobile app creation.
+                I love building user-centered experiences that solve real problems—from marketplaces for campus
                 communities to interactive meal planning apps.
               </p>
             </div>
 
             {/* Beyond the Code */}
             <motion.div
-              className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
+              className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20"
               variants={itemVariants}
             >
-              <h3 className="text-2xl font-semibold text-[#FFC459] mb-4">
+              <h3 className="text-2xl font-semibold text-[#F6F4D2] mb-4">
                 Beyond the Code
               </h3>
               <p className="text-[#3A3A3A] text-lg leading-relaxed mb-4">
-                I'm passionate about building community and empowering others through technology. As Secretary 
-                of the Hispanic Student Association, I lead our digital presence—directing our web team to 
+                I'm passionate about building community and empowering others through technology. As Secretary
+                of the Hispanic Student Association, I lead our digital presence—directing our web team to
                 maintain both our public Wix site and a custom React/Firebase member portal.
               </p>
               <p className="text-[#3A3A3A] text-lg leading-relaxed mb-4">
-                I also serve as UX/UI Director for SHPE UF, where I design user-friendly interfaces in Figma 
-                for over 300 members. I love creating experiences that make technology more accessible and 
+                I also serve as UX/UI Director for SHPE UF, where I design user-friendly interfaces in Figma
+                for over 300 members. I love creating experiences that make technology more accessible and
                 intuitive for everyone.
               </p>
               <p className="text-[#3A3A3A] text-lg leading-relaxed">
-                Previously, as Mentorship Director for HSA's Member Leadership Program, I coordinated 
-                mentor-mentee pairings for 40 students and organized monthly challenges to foster 
-                meaningful connections and growth within our community.
+                Outside of tech, I’m all about balance and creativity. 
+                I love spending weekends watching movies or diving into historical fantasy that delve into topics such as identity, philosophy, and linguistics. 
+                You can usually find me playing cozy games, curating the perfect playlist (my favorite hobby!), or falling down a 
+                YouTube rabbit hole. I’m also a big foodie—Thai food has my heart—and I love taking spontaneous day 
+                trips and exploring new places. Fashion is another creative outlet for me, a way to express my personality beyond the screen. 
               </p>
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Skills & More */}
+          {/* Right Column - Skills */}
           <motion.div variants={itemVariants} className="space-y-6">
-            {/* Technical Skills */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-              <h3 className="text-2xl font-semibold text-[#FFC459] mb-6">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+              <h3 className="text-2xl font-semibold text-[#F6F4D2] mb-6">
                 Technical Skills
               </h3>
-              
-              <div className="mb-6">
-                <h4 className="text-lg font-semibold text-[#3A3A3A] mb-3">Languages</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.languages.map((skill) => (
-                    <motion.span
-                      key={skill}
-                      className="bg-white/10 rounded-full px-4 py-2 text-[#3A3A3A] font-medium border border-white/20"
-                      whileHover={{
-                        scale: 1.05,
-                        backgroundColor: "rgba(255, 196, 89, 0.2)",
-                        borderColor: "#FFC459",
-                      }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
 
-              <div className="mb-6">
-                <h4 className="text-lg font-semibold text-[#3A3A3A] mb-3">Frameworks & Databases</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.frameworks.map((skill) => (
-                    <motion.span
-                      key={skill}
-                      className="bg-white/10 rounded-full px-4 py-2 text-[#3A3A3A] font-medium border border-white/20"
-                      whileHover={{
-                        scale: 1.05,
-                        backgroundColor: "rgba(255, 196, 89, 0.2)",
-                        borderColor: "#FFC459",
-                      }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
+              {Object.entries(skills).map(([category, skillList]) => (
+                <div key={category} className="mb-6">
+                  <h4 className="text-lg font-semibold text-[#3A3A3A] mb-3 capitalize">{category}</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {skillList.map((skill) => (
+                      <motion.span
+                        key={skill}
+                        className="bg-white/10 rounded-full px-4 py-2 text-[#3A3A3A] font-medium border border-white/20"
+                        whileHover={{
+                          scale: 1.05,
+                          backgroundColor: "rgba(255, 196, 89, 0.2)",
+                          borderColor: "#FFC459",
+                        }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-[#3A3A3A] mb-3">Tools & Design</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.tools.map((skill) => (
-                    <motion.span
-                      key={skill}
-                      className="bg-white/10 rounded-full px-4 py-2 text-[#3A3A3A] font-medium border border-white/20"
-                      whileHover={{
-                        scale: 1.05,
-                        backgroundColor: "rgba(255, 196, 89, 0.2)",
-                        borderColor: "#FFC459",
-                      }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
 
-            {/* Currently */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-              <h3 className="text-2xl font-semibold text-[#FFC459] mb-4">
-                Currently
-              </h3>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+              <h3 className="text-2xl font-semibold text-[#F6F4D2] mb-4">Currently</h3>
               <p className="text-[#3A3A3A] text-lg leading-relaxed mb-3">
-                Completing the IBM Full Stack Software Engineering Course and working on innovative 
+                Completing the IBM Full Stack Software Engineering Course and working on innovative
                 projects that push the boundaries of web and mobile development.
               </p>
               <p className="text-[#3A3A3A] text-lg leading-relaxed">
-                Always eager to collaborate on meaningful projects and explore opportunities in 
+                Always eager to collaborate on meaningful projects and explore opportunities in
                 software engineering, UX/UI design, and creative technology.
               </p>
             </div>
@@ -194,13 +157,8 @@ const About: React.FC = () => {
         </div>
 
         {/* Call to Action */}
-        <motion.div
-          className="text-center mt-16"
-          variants={itemVariants}
-        >
-          <p className="text-[#3A3A3A] text-xl mb-6">
-            Want to work together or just say hi?
-          </p>
+        <motion.div className="text-center mt-16" variants={itemVariants}>
+          <p className="text-[#3A3A3A] text-xl mb-6">Want to work together or just say hi?</p>
           <motion.button
             className="px-8 py-4 bg-[#FFC459] text-gray-900 font-semibold rounded-full text-lg"
             whileHover={{ scale: 1.05, backgroundColor: "#FFD380" }}

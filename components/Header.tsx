@@ -22,7 +22,7 @@ const Header: React.FC = () => {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 w-full z-50 translate-x-230 translate-y-3"
+      className="fixed top-0 left-0 w-full z-50 translate-x-240 translate-y-3"
       initial={{ y: 0, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
