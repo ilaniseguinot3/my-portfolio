@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Domine } from "next/font/google"; // <-- add this
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const domine = Domine({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-domine", // CSS variable for Tailwind/Global use
+  weight: ["400", "700"],    // optional: choose weights you want
 });
 
 export const metadata: Metadata = {
@@ -19,14 +15,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${domine.variable} antialiased`}>
         {children}
       </body>
     </html>
