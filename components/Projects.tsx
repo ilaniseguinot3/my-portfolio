@@ -60,11 +60,11 @@ const Projects: React.FC = () => {
   return (
     <section 
       ref={sectionRef}
-      className="py-20 bg-gray-100 relative"
+      className="py-20 bg-[#CBDFBD] relative"
       onMouseMove={handleMouseMove}
     >
-      <h2 className="text-4xl font-bold text-center mb-12">My Projects</h2>
-      <div className="max-w-6xl mx-auto grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <h2 className="text-4xl font-bold text-center mb-12 text-[#FFFFFF]">My Projects</h2>
+      <div className="max-w-5xl mx-auto grid gap-8 sm:grid-cols-1">
         {projects.map((project, index) => (
           <ProjectCard
             key={index}
