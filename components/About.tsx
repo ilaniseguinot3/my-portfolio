@@ -1,18 +1,19 @@
 "use client";
-import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useMotionValue } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+
+const splitLetters = (text: string) => text.split("");
 
 const About: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (sectionRef.current) {
       const rect = sectionRef.current.getBoundingClientRect();
-      setMousePos({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
+      mouseX.set(e.clientX - rect.left);
+      mouseY.set(e.clientY - rect.top);
     }
   };
 
@@ -41,11 +42,11 @@ const About: React.FC = () => {
       className="relative min-h-screen bg-gradient-to-b from-[#849F8C] to-[#849F8C] py-20 px-6 overflow-hidden"
       onMouseMove={handleMouseMove}
     >
-      {/* Aura Effect */}
+      {/* Background Aura Effect */}
       <div
         className="pointer-events-none absolute inset-0 transition duration-75"
         style={{
-          background: `radial-gradient(500px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.18), transparent 50%)`,
+          background: `radial-gradient(500px circle at ${mouseX.get()}px ${mouseY.get()}px, rgba(255, 255, 255, 0.18), transparent 50%)`,
           mixBlendMode: "overlay",
         }}
       />
@@ -57,21 +58,25 @@ const About: React.FC = () => {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        {/* Section Title */}
-        <motion.h2
-          className="text-5xl font-bold text-center mb-16 text-[#F6F4D2]"
-          variants={itemVariants}
-        >
-          About Me
-        </motion.h2>
+        {/* Section Title with aura letters */}
+        <HeaderWithAura 
+          text="About Me" 
+          className="text-5xl font-bold text-center mb-16 text-[#F6F4D2]" 
+          mouseX={mouseX} 
+          mouseY={mouseY} 
+          variants={itemVariants} 
+        />
 
         <div className="grid md:grid-cols-2 gap-12 items-start">
-          {/* Left Column - Introduction */}
+          {/* Left Column */}
           <motion.div variants={itemVariants} className="space-y-6">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <h3 className="text-3xl font-semibold text-[#F6F4D2] mb-4">
-                Hi, I'm Ilani Seguinot
-              </h3>
+              <HeaderWithAura 
+                text="Hi, I'm Ilani Seguinot"
+                className="text-3xl font-semibold text-[#F6F4D2] mb-4"
+                mouseX={mouseX}
+                mouseY={mouseY}
+              />
               <p className="text-[#3A3A3A] text-lg leading-relaxed mb-4">
                 I'm a Computer Science and Digital Arts & Sciences student at the University of Florida,
                 graduating in May 2027. As a Benacquisto Scholar and National Merit Finalist with a 3.81 GPA,
@@ -89,9 +94,12 @@ const About: React.FC = () => {
               className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20"
               variants={itemVariants}
             >
-              <h3 className="text-2xl font-semibold text-[#F6F4D2] mb-4">
-                Beyond the Code
-              </h3>
+              <HeaderWithAura 
+                text="Beyond the Code"
+                className="text-2xl font-semibold text-[#F6F4D2] mb-4"
+                mouseX={mouseX}
+                mouseY={mouseY}
+              />
               <p className="text-[#3A3A3A] text-lg leading-relaxed mb-4">
                 I'm passionate about building community and empowering others through technology. As Secretary
                 of the Hispanic Student Association, I lead our digital presence—directing our web team to
@@ -102,22 +110,18 @@ const About: React.FC = () => {
                 for over 300 members. I love creating experiences that make technology more accessible and
                 intuitive for everyone.
               </p>
-              <p className="text-[#3A3A3A] text-lg leading-relaxed">
-                Outside of tech, I’m all about balance and creativity. 
-                I love spending weekends watching movies or diving into historical fantasy that delve into topics such as identity, philosophy, and linguistics. 
-                You can usually find me playing cozy games, curating the perfect playlist (my favorite hobby!), or falling down a 
-                YouTube rabbit hole. I’m also a big foodie—Thai food has my heart—and I love taking spontaneous day 
-                trips and exploring new places. Fashion is another creative outlet for me, a way to express my personality beyond the screen. 
-              </p>
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Skills */}
+          {/* Right Column */}
           <motion.div variants={itemVariants} className="space-y-6">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <h3 className="text-2xl font-semibold text-[#F6F4D2] mb-6">
-                Technical Skills
-              </h3>
+              <HeaderWithAura 
+                text="Technical Skills"
+                className="text-2xl font-semibold text-[#F6F4D2] mb-6"
+                mouseX={mouseX}
+                mouseY={mouseY}
+              />
 
               {Object.entries(skills).map(([category, skillList]) => (
                 <div key={category} className="mb-6">
@@ -141,38 +145,98 @@ const About: React.FC = () => {
                 </div>
               ))}
             </div>
-
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <h3 className="text-2xl font-semibold text-[#F6F4D2] mb-4">Currently</h3>
-              <p className="text-[#3A3A3A] text-lg leading-relaxed mb-3">
-                Completing the IBM Full Stack Software Engineering Course and working on innovative
-                projects that push the boundaries of web and mobile development.
-              </p>
-              <p className="text-[#3A3A3A] text-lg leading-relaxed">
-                Always eager to collaborate on meaningful projects and explore opportunities in
-                software engineering, UX/UI design, and creative technology.
-              </p>
-            </div>
           </motion.div>
         </div>
-
-        {/* Call to Action */}
-        <motion.div className="text-center mt-16" variants={itemVariants}>
-          <p className="text-[#3A3A3A] text-xl mb-6">Want to work together or just say hi?</p>
-          <motion.button
-            className="px-8 py-4 bg-[#FFC459] text-gray-900 font-semibold rounded-full text-lg"
-            whileHover={{ scale: 1.05, backgroundColor: "#FFD380" }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              const contactSection = document.getElementById("contact");
-              contactSection?.scrollIntoView({ behavior: "smooth" });
-            }}
-          >
-            Get In Touch
-          </motion.button>
-        </motion.div>
       </motion.div>
     </section>
+  );
+};
+
+// 🔸 HeaderWithAura and LetterSpan identical logic to Hero
+const HeaderWithAura: React.FC<{
+  text: string;
+  className?: string;
+  variants?: any;
+  mouseX: any;
+  mouseY: any;
+}> = ({ text, className = "", variants, mouseX, mouseY }) => {
+  return (
+    <motion.h3 className={className} variants={variants}>
+      {splitLetters(text).map((letter, index) => (
+        <LetterSpan
+          key={index}
+          letter={letter}
+          mouseX={mouseX}
+          mouseY={mouseY}
+          initialColor="#F6F4D2"
+        />
+      ))}
+    </motion.h3>
+  );
+};
+
+const LetterSpan: React.FC<{
+  letter: string;
+  mouseX: any;
+  mouseY: any;
+  initialColor: string;
+}> = ({ letter, mouseX, mouseY, initialColor }) => {
+  const letterRef = useRef<HTMLSpanElement>(null);
+  const [color, setColor] = useState(initialColor);
+
+  useEffect(() => {
+    const update = () => {
+      const latestX = mouseX.get();
+      const latestY = mouseY.get();
+      updateColor(latestX, latestY);
+    };
+
+    const unsubscribeX = mouseX.onChange(update);
+    const unsubscribeY = mouseY.onChange(update);
+
+    return () => {
+      unsubscribeX();
+      unsubscribeY();
+    };
+  }, [mouseX, mouseY]);
+
+  const updateColor = (x: number, y: number) => {
+    if (!letterRef.current) return;
+
+    const rect = letterRef.current.getBoundingClientRect();
+    const letterCenterX = rect.left + rect.width / 2;
+    const letterCenterY = rect.top + rect.height / 2;
+    const section = letterRef.current.closest("section");
+    if (!section) return;
+
+    const sectionRect = section.getBoundingClientRect();
+    const relX = letterCenterX - sectionRect.left;
+    const relY = letterCenterY - sectionRect.top;
+
+    const distance = Math.sqrt(Math.pow(x - relX, 2) + Math.pow(y - relY, 2));
+    const maxDistance = 250;
+    const intensity = Math.max(0, 1 - distance / maxDistance);
+
+    if (intensity === 0) {
+      setColor(initialColor);
+      return;
+    }
+
+    // Interpolate between initialColor (#F6F4D2) and #FFC459
+    const start = [246, 244, 210];
+    const end = [255, 196, 89];
+
+    const r = Math.round(start[0] + (end[0] - start[0]) * intensity);
+    const g = Math.round(start[1] + (end[1] - start[1]) * intensity);
+    const b = Math.round(start[2] + (end[2] - start[2]) * intensity);
+
+    setColor(`rgb(${r}, ${g}, ${b})`);
+  };
+
+  return (
+    <motion.span ref={letterRef} style={{ color, display: "inline-block" }}>
+      {letter === " " ? "\u00A0" : letter}
+    </motion.span>
   );
 };
 
