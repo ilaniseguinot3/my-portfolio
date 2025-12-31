@@ -8,6 +8,7 @@ const AboutMain: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const [flipped, setFlipped] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (sectionRef.current) {
@@ -19,7 +20,7 @@ const AboutMain: React.FC = () => {
 
   const skills = {
     languages: ["C++", "Python", "Java", "JavaScript", "TypeScript", "C#", "HTML/CSS", "SQL"],
-    frameworks: ["React", "React Native", "Node.js", "MongoDB", "Firebase", "Supabase", "Vite", "Expo"],
+    frameworks: ["React", "React Native", "Node.js", "Next.js", "MongoDB", "Tailwind CSS", "Firebase", "Supabase", "Vite", "Expo"],
     tools: ["Unity", "Blender", "Figma", "Git", "VSCode", "Jira", "Maya", "Processing"],
   };
 
@@ -35,15 +36,6 @@ const AboutMain: React.FC = () => {
       onMouseMove={handleMouseMove}
       id="about"
     >
-      {/* Background Aura */}
-      <div
-        className="pointer-events-none absolute inset-0 transition duration-75"
-        style={{
-          background: `radial-gradient(500px circle at ${mouseX.get()}px ${mouseY.get()}px, rgba(255,255,255,0.18), transparent 50%)`,
-          mixBlendMode: "overlay",
-        }}
-      />
-
       <motion.div
         className="relative max-w-6xl mx-auto z-10"
         initial="hidden"
@@ -58,93 +50,148 @@ const AboutMain: React.FC = () => {
           variants={itemVariants}
         />
 
-        {/* Intro */}
-        <motion.div variants={itemVariants} className="mb-16">
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 max-w-4xl mx-auto">
-            <HeaderWithAura
-              text="Hi Everyone!"
-              className="text-3xl font-semibold text-[#F6F4D2] mb-6 text-center"
-              mouseX={mouseX}
-              mouseY={mouseY}
-            />
-            <p className="text-[#3A3A3A] text-lg leading-relaxed text-center">
-              My journey into technology began in middle school robotics, where I discovered the joy of building
-              something bigger than myself. Through teamwork and collaboration, I learned that the best innovations
-              happen when diverse minds come together. That spark has grown into a passion for using technology to
-              connect people and empower communities—a mission I've pursued through my college years at UF, especially
-              within the vibrant Hispanic community on campus. Today, I blend technical excellence with creative design,
-              driven by the belief that technology's greatest power lies in bringing people together.
-            </p>
+        {/* Intro + Photo Row */}
+        <motion.div
+          variants={itemVariants}
+          className="mb-20 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center"
+        >
+          {/* Left: Flippable Card */}
+          <div
+            className="relative w-full h-[480px] cursor-pointer perspective-1000"
+            onClick={() => setFlipped(!flipped)}
+            onMouseEnter={() => setFlipped(true)}
+            onMouseLeave={() => setFlipped(false)}
+          >
+            <motion.div
+              className="relative w-full h-full"
+              animate={{ rotateY: flipped ? 180 : 0 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              {/* Front: About Me Text */}
+              <div
+                className="absolute w-full h-full bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl"
+                style={{ backfaceVisibility: "hidden" }}
+              >
+                <HeaderWithAura
+                  text="Hi Everyone!"
+                  className="text-3xl font-semibold text-[#F6F4D2] mb-4"
+                  mouseX={mouseX}
+                  mouseY={mouseY}
+                />
+                <p className="text-[#F6F4D2] text-lg leading-relaxed">
+                  My journey into technology began in middle school robotics, where I discovered the joy of building
+                  something bigger than myself. Through teamwork and collaboration, I learned that the best innovations
+                  happen when diverse minds come together. That spark has grown into a passion for using technology to
+                  connect people and empower communities—a mission I've pursued through my college years at UF,
+                  especially within the vibrant Hispanic community on campus. Today, I blend technical excellence with
+                  creative design, driven by the belief that technology's greatest power lies in bringing people
+                  together.
+                </p>
+                <p className="mt-1 text-sm text-[#F6F4D2]/60 italic">
+                  (Click or hover to flip my student profile!)
+                </p>
+              </div>
+
+              {/* Back: Student ID */}
+              <div
+                className="absolute w-full h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg rounded-3xl p-8 border-2 border-[#FFC459]/30 shadow-2xl"
+                style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+              >
+                <div className="flex items-center justify-between mb-6 pb-6 border-b border-[#FFC459]/20">
+                  <div>
+                    <h3 className="text-3xl font-bold text-[#F6F4D2]">Ilani Seguinot</h3>
+                    <p className="text-[#FFC459] font-medium">Student Profile</p>
+                  </div>
+                  <div className="w-20 h-20 bg-[#FFC459]/20 rounded-full flex items-center justify-center border-2 border-[#FFC459]">
+                    <span className="text-3xl">🎓</span>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <Info label="Major" value="Computer Science & Digital Arts" />
+                    <Info label="University" value="University of Florida" />
+                    <Info label="Graduation" value="May 2027" />
+                  </div>
+                  <div className="space-y-4">
+                    <Info label="GPA" value="3.84 / 4.0" />
+                    <Info
+                      label="Honors"
+                      value={["Reitz Scholar", "Benacquisto Scholar", "National Merit Finalist", "Dean's List"]}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-6 border-t border-[#FFC459]/20">
+                  <motion.a
+                    href="https://drive.google.com/file/d/1XeX8cwktHAsFYxdrJ-jdX4WLcSKj2HMR/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-3 w-full bg-[#FFC459] text-gray-900 font-semibold py-4 rounded-xl"
+                    whileHover={{ scale: 1.02, backgroundColor: "#FFD380" }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <img src="/googledrive.png" alt="Google Drive" className="w-5 h-5 object-contain" />
+                    Open Resume
+                  </motion.a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right: Image */}
+          <div className="relative flex justify-center">
+            <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-3xl overflow-hidden shadow-[0_0_30px_rgba(255,196,89,0.4)] border border-[#FFC459]/40">
+              <img
+                src="/headshot.jpg"
+                alt="Ilani Seguinot"
+                className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+            </div>
           </div>
         </motion.div>
 
-        {/* Student ID + Skills */}
-        <motion.div variants={itemVariants} className="mb-20 max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
-          {/* Student ID */}
-          <div>
-            <HeaderWithAura
-              text="Student ID"
-              className="text-3xl font-semibold text-[#F6F4D2] mb-6 text-center md:text-left"
-              mouseX={mouseX}
-              mouseY={mouseY}
-            />
-            <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-3xl p-8 border-2 border-[#FFC459]/30 shadow-2xl">
-              <div className="flex items-center justify-between mb-6 pb-6 border-b border-[#FFC459]/20">
-                <div>
-                  <h3 className="text-3xl font-bold text-[#F6F4D2]">Ilani Seguinot</h3>
-                  <p className="text-[#FFC459] font-medium">Student Profile</p>
-                </div>
-                <div className="w-20 h-20 bg-[#FFC459]/20 rounded-full flex items-center justify-center border-2 border-[#FFC459]">
-                  <span className="text-3xl">🎓</span>
+        {/* Technical Skills */}
+        <motion.div variants={itemVariants} className="max-w-6xl mx-auto relative">
+          <HeaderWithAura
+            text="Technical Skills"
+            className="text-3xl font-semibold text-[#F6F4D2] mb-6 text-center md:text-left"
+            mouseX={mouseX}
+            mouseY={mouseY}
+          />
+
+          <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 flex flex-col md:flex-row justify-between shadow-2xl">
+            {Object.entries(skills).map(([category, list], index) => (
+              <div
+                key={category}
+                className={`flex-1 ${
+                  index !== Object.keys(skills).length - 1
+                    ? "md:border-r md:border-[#FFC459]/30 md:pr-4 md:mr-3"
+                    : ""
+                } mb-6 md:mb-0`}
+              >
+                <h4 className="text-lg font-semibold text-[#F6F4D2] mb-4 capitalize">{category}</h4>
+                <div className="grid grid-cols-3 gap-3">
+                  {list.map((skill) => (
+                    <motion.span
+                      key={skill}
+                      className="bg-white/10 rounded-full w-28 h-12 flex items-center justify-center text-[#3A3A3A] font-medium border border-white/20 cursor-pointer text-center shadow-sm"
+                      whileHover={{
+                        scale: 1.05,
+                        backgroundColor: "rgba(255,196,89,0.2)",
+                        borderColor: "#FFC459",
+                        color: "#FFC459",
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {skill}
+                    </motion.span>
+                  ))}
                 </div>
               </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <Info label="Major" value="Computer Science & Digital Arts" />
-                  <Info label="University" value="University of Florida" />
-                  <Info label="Graduation" value="May 2027" />
-                </div>
-                <div className="space-y-4">
-                  <Info label="GPA" value="3.81 / 4.0" />
-                  <Info label="Honors" value="Benacquisto Scholar / National Merit Finalist" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Technical Skills */}
-          <div>
-            <HeaderWithAura
-              text="Technical Skills"
-              className="text-3xl font-semibold text-[#F6F4D2] mb-6 text-center md:text-left"
-              mouseX={mouseX}
-              mouseY={mouseY}
-            />
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 h-full flex flex-wrap justify-center md:justify-start gap-4">
-              {Object.entries(skills).map(([category, list]) => (
-                <div key={category} className="w-full mb-4">
-                  <h4 className="text-lg font-semibold text-[#F6F4D2] mb-2 capitalize">{category}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {list.map((skill) => (
-                      <motion.span
-                        key={skill}
-                        className="bg-white/10 rounded-full px-4 py-2 text-[#3A3A3A] font-medium border border-white/20 cursor-pointer"
-                        whileHover={{
-                          scale: 1.05,
-                          backgroundColor: "rgba(255,196,89,0.2)",
-                          borderColor: "#FFC459",
-                          color: "#FFC459",
-                        }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {skill}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
         </motion.div>
       </motion.div>
@@ -152,20 +199,22 @@ const AboutMain: React.FC = () => {
   );
 };
 
-const Info = ({ label, value }: { label: string; value: string }) => (
+const Info = ({ label, value }: { label: string; value: string | string[] }) => (
   <div>
     <p className="text-[#FFC459] text-sm font-semibold uppercase tracking-wide mb-1">{label}</p>
-    <p className="text-[#F6F4D2] font-medium">{value}</p>
+    {Array.isArray(value) ? (
+      <div className="flex flex-col gap-1">
+        {value.map((v, i) => (
+          <p key={i} className="text-[#F6F4D2] font-medium">{v}</p>
+        ))}
+      </div>
+    ) : (
+      <p className="text-[#F6F4D2] font-medium">{value}</p>
+    )}
   </div>
 );
 
-const HeaderWithAura = ({
-  text,
-  className = "",
-  variants,
-  mouseX,
-  mouseY,
-}: any) => (
+const HeaderWithAura = ({ text, className = "", variants, mouseX, mouseY }: any) => (
   <motion.h3 className={className} variants={variants}>
     {splitLetters(text).map((letter: string, i: number) => (
       <LetterSpan key={i} letter={letter} mouseX={mouseX} mouseY={mouseY} initialColor="#F6F4D2" />
@@ -173,12 +222,7 @@ const HeaderWithAura = ({
   </motion.h3>
 );
 
-const LetterSpan = ({
-  letter,
-  mouseX,
-  mouseY,
-  initialColor,
-}: any) => {
+const LetterSpan = ({ letter, mouseX, mouseY, initialColor }: any) => {
   const ref = useRef<HTMLSpanElement>(null);
   const [color, setColor] = useState(initialColor);
 

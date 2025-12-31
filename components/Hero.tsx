@@ -97,17 +97,17 @@ const Hero: React.FC = () => {
     if (typedChars1 < line1.length) {
       const timer = setTimeout(() => {
         setTypedChars1(typedChars1 + 1);
-      }, 80);
+      }, 40);
       return () => clearTimeout(timer);
     } else if (typedChars2 < line2.length) {
       const timer = setTimeout(() => {
         setTypedChars2(typedChars2 + 1);
-      }, 80);
+      }, 40);
       return () => clearTimeout(timer);
     } else if (typedChars3 < line3.length) {
       const timer = setTimeout(() => {
         setTypedChars3(typedChars3 + 1);
-      }, 80);
+      }, 40);
       return () => clearTimeout(timer);
     }
   }, [typedChars1, typedChars2, typedChars3]);
