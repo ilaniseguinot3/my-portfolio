@@ -1,0 +1,298 @@
+"use client";
+import { motion, useMotionValue } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+
+const splitLetters = (text: string) => text.split("");
+
+const AboutJourney: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (sectionRef.current) {
+      const rect = sectionRef.current.getBoundingClientRect();
+      mouseX.set(e.clientX - rect.left);
+      mouseY.set(e.clientY - rect.top);
+    }
+  };
+
+  const involvements = [
+    {
+      year: "2024-Present",
+      title: "Secretary",
+      organization: "Hispanic Student Association",
+      description:
+        "Leading our digital presence by directing the web team to maintain both our public Wix site and a custom React/Firebase member portal.",
+      impact: "Enhanced digital engagement for 500+ members",
+    },
+    {
+      year: "2024-Present",
+      title: "UX/UI Director",
+      organization: "SHPE UF",
+      description:
+        "Designing user-friendly interfaces in Figma for over 300 members, making technology more accessible and intuitive.",
+      impact: "Improved user experience for 300+ members",
+    },
+    {
+      year: "2023-2024",
+      title: "IBM Full Stack Course",
+      organization: "Professional Development",
+      description:
+        "Completed full-stack training focused on React, Node.js, and cloud deployment best practices.",
+      impact: "Built 10+ full-stack projects",
+    },
+  ];
+
+  const funFacts = [
+    { emoji: "🍜", label: "Favorite Food", value: "Thai Cuisine", favorite: "Pad Thai" },
+    { emoji: "🎮", label: "Hobby", value: "Cozy Games", favorite: "Zelda: Breath of the Wild" },
+    { emoji: "🎵", label: "Passion", value: "Playlist Curation", favorite: "Reggaeton + Indie Vibes" },
+    { emoji: "📚", label: "Reading", value: "Historical Fantasy", favorite: "Babel by R.F. Kuang" },
+    { emoji: "👗", label: "Style", value: "Fashion Enthusiast", favorite: "90's Downtown NYC" },
+    { emoji: "🚗", label: "Adventure", value: "Spontaneous Day Trips", favorite: "St. Augustine" },
+  ];
+
+  return (
+    <section
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      className="relative min-h-screen py-20 px-6 overflow-hidden"
+      id="journey"
+    >
+      {/* --- Smooth Static Background Image --- */}
+      <motion.div
+        initial={{ scale: 1.05, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="absolute -inset-1 overflow-hidden"
+      >
+        <div
+          className="absolute inset-0 bg-[url('/flamboyan.jpg')] bg-cover bg-center scale-105"
+          style={{
+            filter: "blur(16px) brightness(0.6)",
+            transform: "translateZ(0)", // ensures smoothness on GPU
+          }}
+        />
+        <div className="absolute inset-0 bg-black/30" />
+      </motion.div>
+
+      {/* Aura Effect */}
+      <div
+        className="pointer-events-none absolute inset-0 transition duration-75"
+        style={{
+          background: `radial-gradient(500px circle at ${mouseX.get()}px ${mouseY.get()}px, rgba(255,255,255,0.1), transparent 50%)`,
+          mixBlendMode: "overlay",
+        }}
+      />
+
+      <motion.div className="relative max-w-6xl mx-auto z-10">
+        {/* Title */}
+        <HeaderWithAura
+          text="My Journey"
+          className="text-4xl font-semibold text-[#F6F4D2] mb-12 text-center drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
+          mouseX={mouseX}
+          mouseY={mouseY}
+        />
+
+        {/* Timeline */}
+        <div className="relative max-w-4xl mx-auto">
+          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-[#FFC459]/40 transform -translate-x-1/2 hidden md:block" />
+          {involvements.map((item, index) => (
+            <TimelineCard key={index} item={item} index={index} />
+          ))}
+        </div>
+
+        {/* Fun Facts */}
+        <HeaderWithAura
+          text="Fun Facts"
+          className="text-3xl font-semibold text-[#F6F4D2] mb-8 text-center mt-20 drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
+          mouseX={mouseX}
+          mouseY={mouseY}
+        />
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          {funFacts.map((fact, i) => (
+            <QuickFactCard key={i} fact={fact} />
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center mt-16">
+          <p className="text-[#F6F4D2] text-xl mb-6 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+            Want to work together or just say hi?
+          </p>
+          <motion.button
+            className="px-8 py-4 bg-[#FFC459] text-gray-900 font-semibold rounded-full text-lg shadow-lg shadow-[#FFC459]/40"
+            whileHover={{ scale: 1.05, backgroundColor: "#FFD380" }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() =>
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            Get In Touch
+          </motion.button>
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+/* --- Subcomponents --- */
+
+const HeaderWithAura = ({ text, className = "", mouseX, mouseY }: any) => (
+  <h3 className={className}>
+    {splitLetters(text).map((letter, i) => (
+      <LetterSpan
+        key={i}
+        letter={letter}
+        mouseX={mouseX}
+        mouseY={mouseY}
+        initialColor="#F6F4D2"
+      />
+    ))}
+  </h3>
+);
+
+const LetterSpan = ({ letter, mouseX, mouseY, initialColor }: any) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [color, setColor] = useState(initialColor);
+
+  useEffect(() => {
+    const update = () => {
+      const latestX = mouseX.get();
+      const latestY = mouseY.get();
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      const section = ref.current.closest("section");
+      if (!section) return;
+      const sectionRect = section.getBoundingClientRect();
+      const relX = rect.left + rect.width / 2 - sectionRect.left;
+      const relY = rect.top + rect.height / 2 - sectionRect.top;
+      const distance = Math.hypot(latestX - relX, latestY - relY);
+      const intensity = Math.max(0, 1 - distance / 250);
+      const start = [246, 244, 210];
+      const end = [255, 196, 89];
+      const r = Math.round(start[0] + (end[0] - start[0]) * intensity);
+      const g = Math.round(start[1] + (end[1] - start[1]) * intensity);
+      const b = Math.round(start[2] + (end[2] - start[2]) * intensity);
+      setColor(`rgb(${r},${g},${b})`);
+    };
+    const subX = mouseX.onChange(update);
+    const subY = mouseY.onChange(update);
+    return () => {
+      subX();
+      subY();
+    };
+  }, [mouseX, mouseY]);
+
+  return (
+    <motion.span ref={ref} style={{ color, display: "inline-block" }}>
+      {letter === " " ? "\u00A0" : letter}
+    </motion.span>
+  );
+};
+
+const TimelineCard = ({ item, index }: any) => {
+  const [flip, setFlip] = useState(false);
+  const even = index % 2 === 0;
+
+  return (
+    <motion.div
+      className={`relative mb-12 md:w-1/2 ${
+        even ? "md:pr-12" : "md:pl-12 md:ml-auto"
+      }`}
+      initial={{ opacity: 0, x: even ? -50 : 50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <div
+        className="relative h-64 cursor-pointer perspective-1000"
+        onMouseEnter={() => setFlip(true)}
+        onMouseLeave={() => setFlip(false)}
+      >
+        <motion.div
+          className="relative w-full h-full"
+          animate={{ rotateY: flip ? 180 : 0 }}
+          transition={{ duration: 0.6 }}
+          style={{ transformStyle: "preserve-3d" }}
+        >
+          {/* Front */}
+          <div
+            className="absolute w-full h-full bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/30 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
+            style={{ backfaceVisibility: "hidden" }}
+          >
+            <div className="text-[#FFC459] font-semibold mb-2">{item.year}</div>
+            <h4 className="text-2xl font-bold text-[#F6F4D2] mb-2">
+              {item.title}
+            </h4>
+            <p className="text-[#F6F4D2]/80 font-medium mb-4">
+              {item.organization}
+            </p>
+            <p className="text-[#F6F4D2]/60 text-sm">Hover to learn more</p>
+          </div>
+
+          {/* Back */}
+          <div
+            className="absolute w-full h-full bg-[#FFC459]/20 backdrop-blur-md rounded-2xl p-6 border border-[#FFC459]/60 shadow-[0_4px_30px_rgba(255,196,89,0.25)]"
+            style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+          >
+            <p className="text-[#F6F4D2]/90 mb-4">{item.description}</p>
+            <div className="mt-auto">
+              <div className="inline-block bg-[#FFC459] text-gray-900 px-4 py-2 rounded-full text-sm font-semibold">
+                {item.impact}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
+const QuickFactCard = ({ fact }: any) => {
+  const [flip, setFlip] = useState(false);
+  return (
+    <div
+      className="relative h-32 cursor-pointer perspective-1000"
+      onMouseEnter={() => setFlip(true)}
+      onMouseLeave={() => setFlip(false)}
+    >
+      <motion.div
+        className="relative w-full h-full"
+        animate={{ rotateY: flip ? 180 : 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        {/* Front */}
+        <div
+          className="absolute w-full h-full bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 text-center flex flex-col items-center justify-center shadow-[0_4px_30px_rgba(0,0,0,0.2)]"
+          style={{ backfaceVisibility: "hidden" }}
+        >
+          <div className="text-4xl mb-2">{fact.emoji}</div>
+          <div className="text-[#F6F4D2] font-semibold text-sm mb-1">
+            {fact.label}
+          </div>
+          <div className="text-[#F6F4D2]/80 text-sm">{fact.value}</div>
+        </div>
+
+        {/* Back */}
+        <div
+          className="absolute w-full h-full bg-[#FFC459]/20 backdrop-blur-md rounded-xl p-6 border border-[#FFC459]/60 flex flex-col items-center justify-center text-center shadow-[0_4px_30px_rgba(255,196,89,0.25)]"
+          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+        >
+          <div className="text-2xl mb-2">{fact.emoji}</div>
+          <div className="text-[#F6F4D2] font-bold text-sm mb-1">
+            My Favorite
+          </div>
+          <div className="text-[#3A3A3A] text-sm font-medium">
+            {fact.favorite}
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+export default AboutJourney;
