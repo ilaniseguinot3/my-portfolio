@@ -19,29 +19,69 @@ const AboutJourney: React.FC = () => {
 
   const involvements = [
     {
-      year: "2024-Present",
+      year: "Fall 2025 - Present",
+      title: "IBM Full Stack Course",
+      organization: "Professional Development",
+      description:
+        "Completing full-stack training focused on React, Node.js, and cloud deployment best practices.",
+      impact: "Built 10+ full-stack projects",
+    },
+    {
+      year: "Summer 2025 - Present",
       title: "Secretary",
-      organization: "Hispanic Student Association",
+      organization: "Hispanic-Latine Student Association",
       description:
         "Leading our digital presence by directing the web team to maintain both our public Wix site and a custom React/Firebase member portal.",
       impact: "Enhanced digital engagement for 500+ members",
     },
     {
-      year: "2024-Present",
-      title: "UX/UI Director",
-      organization: "SHPE UF",
+      year: "Fall 2025 - Present",
+      title: "Reitz Scholar",
+      organization: "University of Florida",
       description:
-        "Designing user-friendly interfaces in Figma for over 300 members, making technology more accessible and intuitive.",
+        "Selected as a Reitz Scholar to participate in a year-long leadership development program focused on personal growth, community engagement, and professional excellence.",
+      impact: "Strengthened leadership skills through faculty and professional mentor 1:1's, service projects, and reflective essays.",
+    },
+    {
+      year: "Fall 2024 - Present",
+      title: "UX/UI Director",
+      organization: "Society of Hispanic Professional Engineers",
+      description:
+        "Designing user-friendly website and mobile app interfaces in Figma for over 300 members, making technology more accessible and intuitive.",
       impact: "Improved user experience for 300+ members",
     },
     {
-      year: "2023-2024",
-      title: "IBM Full Stack Course",
+      year: "Spring 2025",
+      title: "Codepath Technical Interview Prep 101",
       organization: "Professional Development",
       description:
-        "Completed full-stack training focused on React, Node.js, and cloud deployment best practices.",
-      impact: "Built 10+ full-stack projects",
+        "Completed CodePath’s Technical Interview Prep 101 course, a hands-on program focused on data structures, algorithms, and problem-solving strategies to prepare for technical interviews.",
+      impact: "Gained practical experience through weekly coding challenges and peer collaboration.",
     },
+    {
+      year: "Summer 2024 – Spring 2025",
+      title: "Mentorship Director",
+      organization: "Member Leadership Program",
+      description:
+        "Directed the mentorship program, overseeing mentor-mentee pairings and organizing events to foster academic, professional, and personal growth within the Hispanic Student Association.",
+      impact: "Matched 40 mentor-mentee pairings in a two-week long recruitment series.",
+    },
+    {
+      year: "Spring 2024",
+      title: "Service Committee Member",
+      organization: "Hispanic-Latine Student Association's Member Leadership Program",
+      description:
+        "Collaborated with committee members to plan and execute service initiatives that encouraged community involvement and leadership development the 40+ student cohort.",
+      impact: "Contributed to 3 service events that strengthened the Gainesville community.",
+    },
+    {
+      year: "Fall 2023",
+      title: "First-Year Leadership Program Member",
+      organization: "Society of Hispanic Professional Engineers",
+      description:
+        "Selected to join a cohort of first-year students focused on developing leadership, professionalism, and teamwork skills through weekly meetings and interactive workshops.",
+      impact: "Participated in the Guppy Tank competition, presenting an innovative project idea to SHPE UF leadership.",
+},
   ];
 
   const funFacts = [
