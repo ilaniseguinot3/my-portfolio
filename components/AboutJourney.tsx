@@ -98,12 +98,7 @@ const AboutJourney: React.FC = () => {
       id="journey"
     >
       {/* --- Smooth Static Background Image --- */}
-      <motion.div
-        initial={{ scale: 1.05, opacity: 0 }}
-        whileInView={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="absolute -inset-1 overflow-hidden"
-      >
+      <div className="absolute -inset-1 overflow-hidden">
         <div
           className="absolute inset-0 bg-[url('/flamboyan.jpg')] bg-cover bg-center scale-105"
           style={{
@@ -112,7 +107,7 @@ const AboutJourney: React.FC = () => {
           }}
         />
         <div className="absolute inset-0 bg-black/30" />
-      </motion.div>
+      </div>
 
       {/* Aura Effect */}
       <div
@@ -123,7 +118,7 @@ const AboutJourney: React.FC = () => {
         }}
       />
 
-      <motion.div className="relative max-w-6xl mx-auto z-10">
+      <div className="relative max-w-6xl mx-auto z-10">
         {/* Title */}
         <HeaderWithAura
           text="My Journey"
@@ -139,7 +134,7 @@ const AboutJourney: React.FC = () => {
             <TimelineCard key={index} item={item} index={index} />
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };
@@ -201,6 +196,7 @@ const LetterSpan = ({ letter, mouseX, mouseY, initialColor }: any) => {
 
 const TimelineCard = ({ item, index }: any) => {
   const [flip, setFlip] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const even = index % 2 === 0;
 
   return (
@@ -212,6 +208,7 @@ const TimelineCard = ({ item, index }: any) => {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, ease: "easeOut" }}
+      onAnimationComplete={() => setHasAnimated(true)}
     >
       <div
         className="relative h-64 cursor-pointer perspective-1000"
