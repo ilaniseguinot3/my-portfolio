@@ -40,7 +40,8 @@ const AboutJourney: React.FC = () => {
       organization: "University of Florida",
       description:
         "Selected as a Reitz Scholar to participate in a year-long leadership development program focused on personal growth, community engagement, and professional excellence.",
-      impact: "Strengthened leadership skills through faculty and professional mentor 1:1's, service projects, and reflective essays.",
+      impact:
+        "Strengthened leadership skills through faculty and professional mentor 1:1's, service projects, and reflective essays.",
     },
     {
       year: "Fall 2024 - Present",
@@ -55,8 +56,9 @@ const AboutJourney: React.FC = () => {
       title: "Codepath Technical Interview Prep 101",
       organization: "Professional Development",
       description:
-        "Completed CodePath’s Technical Interview Prep 101 course, a hands-on program focused on data structures, algorithms, and problem-solving strategies to prepare for technical interviews.",
-      impact: "Gained practical experience through weekly coding challenges and peer collaboration.",
+        "Completed CodePath's Technical Interview Prep 101 course, a hands-on program focused on data structures, algorithms, and problem-solving strategies to prepare for technical interviews.",
+      impact:
+        "Gained practical experience through weekly coding challenges and peer collaboration.",
     },
     {
       year: "Summer 2024 – Spring 2025",
@@ -64,15 +66,18 @@ const AboutJourney: React.FC = () => {
       organization: "Member Leadership Program",
       description:
         "Directed the mentorship program, overseeing mentor-mentee pairings and organizing events to foster academic, professional, and personal growth within the Hispanic Student Association.",
-      impact: "Matched 40 mentor-mentee pairings in a two-week long recruitment series.",
+      impact:
+        "Matched 40 mentor-mentee pairings in a two-week long recruitment series.",
     },
     {
       year: "Spring 2024",
       title: "Service Committee Member",
-      organization: "Hispanic-Latine Student Association's Member Leadership Program",
+      organization:
+        "Hispanic-Latine Student Association's Member Leadership Program",
       description:
         "Collaborated with committee members to plan and execute service initiatives that encouraged community involvement and leadership development the 40+ student cohort.",
-      impact: "Contributed to 3 service events that strengthened the Gainesville community.",
+      impact:
+        "Contributed to 3 service events that strengthened the Gainesville community.",
     },
     {
       year: "Fall 2023",
@@ -80,17 +85,9 @@ const AboutJourney: React.FC = () => {
       organization: "Society of Hispanic Professional Engineers",
       description:
         "Selected to join a cohort of first-year students focused on developing leadership, professionalism, and teamwork skills through weekly meetings and interactive workshops.",
-      impact: "Participated in the Guppy Tank competition, presenting an innovative project idea to SHPE UF leadership.",
-},
-  ];
-
-  const funFacts = [
-    { emoji: "🍜", label: "Favorite Food", value: "Thai Cuisine", favorite: "Pad Thai" },
-    { emoji: "🎮", label: "Hobby", value: "Cozy Games", favorite: "Zelda: Breath of the Wild" },
-    { emoji: "🎵", label: "Passion", value: "Playlist Curation", favorite: "Reggaeton + Indie Vibes" },
-    { emoji: "📚", label: "Reading", value: "Historical Fantasy", favorite: "Babel by R.F. Kuang" },
-    { emoji: "👗", label: "Style", value: "Fashion Enthusiast", favorite: "90's Downtown NYC" },
-    { emoji: "🚗", label: "Adventure", value: "Spontaneous Day Trips", favorite: "St. Augustine" },
+      impact:
+        "Participated in the Guppy Tank competition, presenting an innovative project idea to SHPE UF leadership.",
+    },
   ];
 
   return (
@@ -111,7 +108,7 @@ const AboutJourney: React.FC = () => {
           className="absolute inset-0 bg-[url('/flamboyan.jpg')] bg-cover bg-center scale-105"
           style={{
             filter: "blur(16px) brightness(0.6)",
-            transform: "translateZ(0)", // ensures smoothness on GPU
+            transform: "translateZ(0)",
           }}
         />
         <div className="absolute inset-0 bg-black/30" />
@@ -141,37 +138,6 @@ const AboutJourney: React.FC = () => {
           {involvements.map((item, index) => (
             <TimelineCard key={index} item={item} index={index} />
           ))}
-        </div>
-
-        {/* Fun Facts */}
-        <HeaderWithAura
-          text="Fun Facts"
-          className="text-3xl font-semibold text-[#F6F4D2] mb-8 text-center mt-20 drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
-          mouseX={mouseX}
-          mouseY={mouseY}
-        />
-
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-          {funFacts.map((fact, i) => (
-            <QuickFactCard key={i} fact={fact} />
-          ))}
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <p className="text-[#F6F4D2] text-xl mb-6 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
-            Want to work together or just say hi?
-          </p>
-          <motion.button
-            className="px-8 py-4 bg-[#FFC459] text-gray-900 font-semibold rounded-full text-lg shadow-lg shadow-[#FFC459]/40"
-            whileHover={{ scale: 1.05, backgroundColor: "#FFD380" }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() =>
-              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
-            }
-          >
-            Get In Touch
-          </motion.button>
         </div>
       </motion.div>
     </section>
@@ -288,50 +254,6 @@ const TimelineCard = ({ item, index }: any) => {
         </motion.div>
       </div>
     </motion.div>
-  );
-};
-
-const QuickFactCard = ({ fact }: any) => {
-  const [flip, setFlip] = useState(false);
-  return (
-    <div
-      className="relative h-32 cursor-pointer perspective-1000"
-      onMouseEnter={() => setFlip(true)}
-      onMouseLeave={() => setFlip(false)}
-    >
-      <motion.div
-        className="relative w-full h-full"
-        animate={{ rotateY: flip ? 180 : 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        style={{ transformStyle: "preserve-3d" }}
-      >
-        {/* Front */}
-        <div
-          className="absolute w-full h-full bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 text-center flex flex-col items-center justify-center shadow-[0_4px_30px_rgba(0,0,0,0.2)]"
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <div className="text-4xl mb-2">{fact.emoji}</div>
-          <div className="text-[#F6F4D2] font-semibold text-sm mb-1">
-            {fact.label}
-          </div>
-          <div className="text-[#F6F4D2]/80 text-sm">{fact.value}</div>
-        </div>
-
-        {/* Back */}
-        <div
-          className="absolute w-full h-full bg-[#FFC459]/20 backdrop-blur-md rounded-xl p-6 border border-[#FFC459]/60 flex flex-col items-center justify-center text-center shadow-[0_4px_30px_rgba(255,196,89,0.25)]"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-        >
-          <div className="text-2xl mb-2">{fact.emoji}</div>
-          <div className="text-[#F6F4D2] font-bold text-sm mb-1">
-            My Favorite
-          </div>
-          <div className="text-[#3A3A3A] text-sm font-medium">
-            {fact.favorite}
-          </div>
-        </div>
-      </motion.div>
-    </div>
   );
 };
 

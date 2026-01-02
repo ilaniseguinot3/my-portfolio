@@ -9,10 +9,10 @@ export default function Page() {
   return (
     <div>
       <Header />
-      <div id="hero"><Hero /></div>
-      <div id="about"><About /></div>
-      <div id="journey"><AboutJourney /></div>
-      {/* <div id="projects"><Projects /></div> */}
+      <Hero />
+      <About />
+      <AboutJourney />
+      <Projects />
       {/* <Footer /> */}
     </div>
   );

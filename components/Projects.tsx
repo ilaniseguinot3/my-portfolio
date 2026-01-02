@@ -1,159 +1,230 @@
 "use client";
-import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { motion, useMotionValue } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
-interface Project {
-  title: string;
-  description: string;
-  link: string;
-}
-
-const projects: Project[] = [
-  {
-    title: "Project One",
-    description: "A cool project built with Next.js and Tailwind.",
-    link: "#",
-  },
-  {
-    title: "Project Two",
-    description: "Another project showcasing interactivity and animations.",
-    link: "#",
-  },
-  {
-    title: "Project Three",
-    description: "A fun project using modern web technologies.",
-    link: "#",
-  },
-];
+const splitLetters = (text: string) => text.split("");
 
 const Projects: React.FC = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const sectionRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (sectionRef.current) {
       const rect = sectionRef.current.getBoundingClientRect();
-      setMousePos({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
+      mouseX.set(e.clientX - rect.left);
+      mouseY.set(e.clientY - rect.top);
     }
   };
 
-  const getDistanceFromCursor = (element: HTMLElement | null) => {
-    if (!element) return 1000;
-    const rect = element.getBoundingClientRect();
-    const sectionRect = sectionRef.current?.getBoundingClientRect();
-    if (!sectionRect) return 1000;
-    
-    const elementCenterX = rect.left + rect.width / 2 - sectionRect.left;
-    const elementCenterY = rect.top + rect.height / 2 - sectionRect.top;
-    
-    const distance = Math.sqrt(
-      Math.pow(mousePos.x - elementCenterX, 2) + 
-      Math.pow(mousePos.y - elementCenterY, 2)
-    );
-    
-    return distance;
+  const projects = [
+    {
+      title: "FlixHabit",
+      image: "/flixhabit.jpg", // Add your project image path
+      technologies: ["C++", "JSON", "Graphs", "MinHeap"],
+      description:
+        "Analyzes Netflix-style user data to recommend movies based on genre similarity and user preferences. Features data visualization and JSON export for a frontend interface.",
+      link: "https://github.com/yourusername/flixhabit",
+    },
+    {
+      title: "Portfolio Website",
+      image: "/portfolio.jpg", // Add your project image path
+      technologies: ["Next.js", "Framer Motion", "Tailwind CSS"],
+      description:
+        "Designed and developed a fully responsive personal portfolio showcasing technical projects, leadership experiences, and creative design with smooth animations.",
+      link: "https://yourwebsite.com",
+    },
+    {
+      title: "MentorMatch App",
+      image: "/mentormatch.jpg", // Add your project image path
+      technologies: ["React", "Firebase", "Figma"],
+      description:
+        "Built a mentorship-matching platform for student organizations, featuring authentication, data storage, and a dashboard for pairing mentors and mentees.",
+      link: "https://github.com/yourusername/mentormatch",
+    },
+    {
+      title: "TaskFlow",
+      image: "/taskflow.jpg", // Add your project image path
+      technologies: ["Node.js", "Express", "MongoDB"],
+      description:
+        "A task management web app with real-time updates and RESTful APIs that helps teams organize and track project progress efficiently.",
+      link: "https://github.com/yourusername/taskflow",
+    },
+  ];
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      className="py-20 bg-[#CBDFBD] relative"
       onMouseMove={handleMouseMove}
+      className="relative min-h-screen bg-gradient-to-b from-[#849F8C] to-[#849F8C] py-20 px-6 overflow-hidden"
+      id="projects"
     >
-      <h2 className="text-4xl font-bold text-center mb-12 text-[#FFFFFF]">My Projects</h2>
-      <div className="max-w-5xl mx-auto grid gap-8 sm:grid-cols-1">
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={index}
-            project={project}
-            mousePos={mousePos}
-            getDistanceFromCursor={getDistanceFromCursor}
-          />
-        ))}
-      </div>
+      <motion.div 
+        className="relative max-w-6xl mx-auto z-10"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        {/* Title */}
+        <HeaderWithAura
+          text="Technical Projects"
+          className="text-5xl font-bold text-center mb-16 text-[#F6F4D2]"
+          mouseX={mouseX}
+          mouseY={mouseY}
+          variants={itemVariants}
+        />
+
+        {/* Projects Grid */}
+        <div className="space-y-16">
+          {projects.map((project, index) => (
+            <ProjectCard 
+              key={index} 
+              project={project} 
+              index={index}
+              variants={itemVariants}
+            />
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <motion.div 
+          className="text-center mt-20"
+          variants={itemVariants}
+        >
+          <p className="text-[#F6F4D2] text-xl mb-6">
+            Want to work together or just say hi?
+          </p>
+          <motion.button
+            className="px-8 py-4 bg-[#FFC459] text-gray-900 font-semibold rounded-full text-lg shadow-lg shadow-[#FFC459]/40"
+            whileHover={{ scale: 1.05, backgroundColor: "#FFD380" }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() =>
+              document
+                .getElementById("contact")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            Get In Touch
+          </motion.button>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
 
-const ProjectCard: React.FC<{
-  project: Project;
-  mousePos: { x: number; y: number };
-  getDistanceFromCursor: (element: HTMLElement | null) => number;
-}> = ({ project, mousePos, getDistanceFromCursor }) => {
-  const cardRef = useRef<HTMLAnchorElement>(null);
+/* --- Subcomponents --- */
 
-  const distance = getDistanceFromCursor(cardRef.current);
-  const maxDistance = 300; // Distance threshold for color effect
-  const colorIntensity = Math.max(0, 1 - distance / maxDistance);
+const HeaderWithAura = ({ text, className = "", variants, mouseX, mouseY }: any) => (
+  <motion.h3 className={className} variants={variants}>
+    {splitLetters(text).map((letter: string, i: number) => (
+      <LetterSpan
+        key={i}
+        letter={letter}
+        mouseX={mouseX}
+        mouseY={mouseY}
+        initialColor="#F6F4D2"
+      />
+    ))}
+  </motion.h3>
+);
 
-  const getLetterColor = (letterIndex: number, totalLetters: number) => {
-    const gray = "#374151"; // text-gray-700
-    const orange = "#FFC459";
-    
-    if (colorIntensity === 0) return gray;
-    
-    // Create a gradient effect across letters based on cursor proximity
-    const letterProgress = letterIndex / totalLetters;
-    const adjustedIntensity = colorIntensity * (1 - Math.abs(letterProgress - 0.5) * 0.5);
-    
-    // Interpolate between gray and orange
-    const r = Math.round(55 + (255 - 55) * adjustedIntensity);
-    const g = Math.round(65 + (196 - 65) * adjustedIntensity);
-    const b = Math.round(81 + (89 - 81) * adjustedIntensity);
-    
-    return `rgb(${r}, ${g}, ${b})`;
-  };
+const LetterSpan = ({ letter, mouseX, mouseY, initialColor }: any) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [color, setColor] = useState(initialColor);
 
-  const titleLetters = project.title.split("");
-  const descLetters = project.description.split("");
+  useEffect(() => {
+    const update = () => {
+      const latestX = mouseX.get();
+      const latestY = mouseY.get();
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      const section = ref.current.closest("section");
+      if (!section) return;
+      const sectionRect = section.getBoundingClientRect();
+      const relX = rect.left + rect.width / 2 - sectionRect.left;
+      const relY = rect.top + rect.height / 2 - sectionRect.top;
+      const distance = Math.hypot(latestX - relX, latestY - relY);
+      const intensity = Math.max(0, 1 - distance / 250);
+      const start = [246, 244, 210];
+      const end = [255, 196, 89];
+      const r = Math.round(start[0] + (end[0] - start[0]) * intensity);
+      const g = Math.round(start[1] + (end[1] - start[1]) * intensity);
+      const b = Math.round(start[2] + (end[2] - start[2]) * intensity);
+      setColor(`rgb(${r},${g},${b})`);
+    };
+    const subX = mouseX.onChange(update);
+    const subY = mouseY.onChange(update);
+    return () => {
+      subX();
+      subY();
+    };
+  }, [mouseX, mouseY]);
 
   return (
-    <motion.a
-      ref={cardRef}
-      href={project.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow"
-      whileHover={{ scale: 1.05 }}
+    <motion.span ref={ref} style={{ color, display: "inline-block" }}>
+      {letter === " " ? "\u00A0" : letter}
+    </motion.span>
+  );
+};
+
+const ProjectCard = ({ project, index, variants }: any) => {
+  return (
+    <motion.div
+      variants={variants}
+      className="flex flex-col md:flex-row gap-8 items-center bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl"
     >
-      <h3 className="text-2xl font-semibold mb-2">
-        {titleLetters.map((letter, idx) => (
-          <motion.span
-            key={idx}
-            style={{ 
-              color: getLetterColor(idx, titleLetters.length),
-              display: 'inline-block'
-            }}
-            animate={{
-              color: getLetterColor(idx, titleLetters.length)
-            }}
-            transition={{ duration: 0.2 }}
-          >
-            {letter === " " ? "\u00A0" : letter}
-          </motion.span>
-        ))}
-      </h3>
-      <p className="text-gray-700">
-        {descLetters.map((letter, idx) => (
-          <motion.span
-            key={idx}
-            style={{ 
-              color: getLetterColor(idx, descLetters.length),
-              display: 'inline-block'
-            }}
-            animate={{
-              color: getLetterColor(idx, descLetters.length)
-            }}
-            transition={{ duration: 0.2 }}
-          >
-            {letter === " " ? "\u00A0" : letter}
-          </motion.span>
-        ))}
-      </p>
-    </motion.a>
+      {/* Project Image */}
+      <div className="w-full md:w-1/2">
+        <div className="relative w-full h-64 md:h-80 rounded-xl overflow-hidden shadow-lg">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        </div>
+      </div>
+
+      {/* Project Info */}
+      <div className="w-full md:w-1/2 space-y-4">
+        <h3 className="text-3xl font-bold text-[#F6F4D2]">{project.title}</h3>
+        
+        {/* Technologies */}
+        <div className="flex flex-wrap gap-2">
+          {project.technologies.map((tech: string, i: number) => (
+            <span
+              key={i}
+              className="px-4 py-2 bg-[#FFC459]/20 text-[#FFC459] rounded-full text-sm font-medium border border-[#FFC459]/40"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Description */}
+        <p className="text-[#F6F4D2]/90 text-lg leading-relaxed">
+          {project.description}
+        </p>
+
+        {/* Link */}
+        <motion.a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 bg-[#FFC459] text-gray-900 px-6 py-3 rounded-full font-semibold shadow-md"
+          whileHover={{ scale: 1.05, backgroundColor: "#FFD380" }}
+          whileTap={{ scale: 0.95 }}
+        >
+          View Project
+          <span>→</span>
+        </motion.a>
+      </div>
+    </motion.div>
   );
 };
 
