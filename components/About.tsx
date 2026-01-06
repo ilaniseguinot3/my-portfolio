@@ -32,7 +32,7 @@ const AboutMain: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen bg-gradient-to-b from-[#849F8C] to-[#564D3D] py-20 px-6 overflow-hidden"
+      className="relative min-h-screen bg-gradient-to-b from-[#849F8C] to-[#4A311F] py-20 px-6 overflow-hidden"
       // 4C8C7F possible
       onMouseMove={handleMouseMove}
       id="about"
