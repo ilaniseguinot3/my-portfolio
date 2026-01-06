@@ -61,7 +61,7 @@ const Projects: React.FC = () => {
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen bg-gradient-to-b from-[#849F8C] to-[#849F8C] py-20 px-6 overflow-hidden"
+      className="relative min-h-screen bg-gradient-to-b from-[#27321F] to-[#849F8C] py-20 px-6 overflow-hidden"
       id="projects"
     >
       <motion.div 
