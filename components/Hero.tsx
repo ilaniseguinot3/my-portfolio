@@ -127,6 +127,7 @@ const Hero: React.FC = () => {
       ref={heroRef}
       className="relative h-screen w-full flex justify-center items-center overflow-hidden"
       onMouseMove={handleMouseMove}
+      id = "hero"
     >
       <img
         src="/flamboyan.jpg"
