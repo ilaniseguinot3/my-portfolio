@@ -19,8 +19,40 @@ const Projects: React.FC = () => {
 
   const projects = [
     {
+      title: "Gator Marketplace",
+      image: "/gatormarketplace.jpg",
+      technologies: ["React", "Vite", "MongoDB", "Auth0", "CSS", "JavaScript"],
+      description:
+        "Built a full-stack marketplace for UF students to safely buy, sell, and trade items within their campus community. Designed the React frontend with Figma components and CSS for seamless navigation.",
+      link: "https://github.com/yourusername/gator-marketplace",
+    },
+    {
+      title: "Culinara: Meal Planner & Pantry",
+      image: "/culinara.jpg",
+      technologies: ["React Native", "Expo", "TypeScript", "Supabase"],
+      description:
+        "Engineered a mobile recipe app with dynamic CRUD operations and Supabase authentication. Crafted interactive UI components, including modals, scrollable grids, and editable meal plans.",
+      link: "https://github.com/yourusername/culinara",
+    },
+    {
+      title: "Aetherion: 2D Platformer",
+      image: "/aetherion.jpg",
+      technologies: ["Unity", "C#"],
+      description:
+        "Developed core mechanics, enemy AI, and level design for a 2D platformer. Integrated original artwork, sound design, and dynamic lighting for immersive gameplay.",
+      link: "https://github.com/yourusername/aetherion",
+    },
+    {
+      title: "Legend of Zelda Temple",
+      image: "/zelda-temple.jpg",
+      technologies: ["Blender"],
+      description:
+        "Modeled and textured a game-accurate temple in Blender with a 3-person team. Applied HDR environments, UV unwrapping, and advanced lighting for realistic interior and exterior rendering.",
+      link: "https://www.artstation.com/yourusername",
+    },
+    {
       title: "FlixHabit",
-      image: "/flixhabit.jpg", // Add your project image path
+      image: "/flixhabit.jpg",
       technologies: ["C++", "JSON", "Graphs", "MinHeap"],
       description:
         "Analyzes Netflix-style user data to recommend movies based on genre similarity and user preferences. Features data visualization and JSON export for a frontend interface.",
@@ -28,27 +60,11 @@ const Projects: React.FC = () => {
     },
     {
       title: "Portfolio Website",
-      image: "/portfolio.jpg", // Add your project image path
+      image: "/portfolio.jpg",
       technologies: ["Next.js", "Framer Motion", "Tailwind CSS"],
       description:
-        "Designed and developed a fully responsive personal portfolio showcasing technical projects, leadership experiences, and creative design with smooth animations.",
+        "Developed a fully responsive personal portfolio showcasing technical projects, leadership experiences, and creative design with smooth animations.",
       link: "https://yourwebsite.com",
-    },
-    {
-      title: "MentorMatch App",
-      image: "/mentormatch.jpg", // Add your project image path
-      technologies: ["React", "Firebase", "Figma"],
-      description:
-        "Built a mentorship-matching platform for student organizations, featuring authentication, data storage, and a dashboard for pairing mentors and mentees.",
-      link: "https://github.com/yourusername/mentormatch",
-    },
-    {
-      title: "TaskFlow",
-      image: "/taskflow.jpg", // Add your project image path
-      technologies: ["Node.js", "Express", "MongoDB"],
-      description:
-        "A task management web app with real-time updates and RESTful APIs that helps teams organize and track project progress efficiently.",
-      link: "https://github.com/yourusername/taskflow",
     },
   ];
 
