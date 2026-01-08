@@ -16,13 +16,14 @@ const Header: React.FC = () => {
   const navItems = [
     { id: "hero", label: "Home" },
     { id: "about", label: "About Me" },
+    { id: "journey", label: "Journey" },
     { id: "projects", label: "Projects" },
-    { id: "contact", label: "Contact" },
+    { id: "contact", label: "Contact Me" },
   ];
 
   return (
     <motion.header
-      className="fixed top-0 left-0 w-full z-50 translate-x-240 translate-y-3"
+      className="fixed top-0 left-0 w-full z-50 translate-x-205 translate-y-3"
       initial={{ y: 0, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}

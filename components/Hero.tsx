@@ -14,8 +14,18 @@ const Hero: React.FC = () => {
   const mouseY = useMotionValue(0);
 
   const line1 = "Hello, I'm Ilani";
-  const line2 = "I am a full stack";
-  const line3 = "software developer.";
+  
+  const rotatingLines = [
+    ["I am a full stack", "software engineer"],
+    ["I build scalable", "web applications"],
+    ["I lead Hispanic", "community initiatives"],
+    ["I create immersive", "game environments"],
+    ["I design seamless", "user experiences"],
+  ];
+  
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const line2 = rotatingLines[currentLineIndex][0];
+  const line3 = rotatingLines[currentLineIndex][1];
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -92,7 +102,7 @@ const Hero: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Typing animation for line 1
+  // Typing animation for lines
   useEffect(() => {
     if (typedChars1 < line1.length) {
       const timer = setTimeout(() => {
@@ -110,7 +120,38 @@ const Hero: React.FC = () => {
       }, 60);
       return () => clearTimeout(timer);
     }
-  }, [typedChars1, typedChars2, typedChars3]);
+  }, [typedChars1, typedChars2, typedChars3, line2, line3]);
+
+  // Rotate to next set of lines with delete animation
+  useEffect(() => {
+    if (typedChars1 === line1.length && 
+        typedChars2 === line2.length && 
+        typedChars3 === line3.length) {
+      const timer = setTimeout(() => {
+        // Start deleting line 3
+        const deleteTimer3 = setInterval(() => {
+          setTypedChars3((prev) => {
+            if (prev > 0) return prev - 1;
+            clearInterval(deleteTimer3);
+            // Start deleting line 2
+            const deleteTimer2 = setInterval(() => {
+              setTypedChars2((prev) => {
+                if (prev > 0) return prev - 1;
+                clearInterval(deleteTimer2);
+                // Move to next set of lines
+                setTimeout(() => {
+                  setCurrentLineIndex((prev) => (prev + 1) % rotatingLines.length);
+                }, 200);
+                return 0;
+              });
+            }, 30);
+            return 0;
+          });
+        }, 30);
+      }, 2000); // Pause for 2 seconds before deleting
+      return () => clearTimeout(timer);
+    }
+  }, [typedChars1, typedChars2, typedChars3, line1.length, line2.length, line3.length, rotatingLines.length]);
 
   // Mouse tracking
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -127,6 +168,7 @@ const Hero: React.FC = () => {
       ref={heroRef}
       className="relative h-screen w-full flex justify-center items-center overflow-hidden"
       onMouseMove={handleMouseMove}
+      id = "hero"
     >
       <img
         src="/flamboyan.jpg"
