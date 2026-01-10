@@ -195,7 +195,6 @@ const Hero: React.FC = () => {
                 />
               ) : null
             )}
-            {/* Cursor for first line only while typing */}
             {!firstLineComplete && typedChars1 < line1.length && (
               <motion.span
                 className="inline-block w-0.5 h-12 bg-[#FFC459] ml-1"
@@ -264,6 +263,22 @@ const Hero: React.FC = () => {
             )}
           </p>
         </div>
+      </motion.div>
+      {/* Scroll Down Arrow */}
+      <motion.div
+        className="absolute bottom-5 left-1/2 -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.8 }}
+        transition={{ duration: 2, ease: "easeInOut" }}
+      >
+        <svg
+          className="w-10 h-10 text-white"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          {/* Bubble-shaped arrow */}
+          <path d="M12 16c-.3 0-.5-.1-.7-.3l-5-5a1 1 0 0 1 1.4-1.4L12 13.6l4.3-4.3a1 1 0 0 1 1.4 1.4l-5 5c-.2.2-.5.3-.7.3z" />
+        </svg>
       </motion.div>
     </div>
   );

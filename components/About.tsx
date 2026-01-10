@@ -81,15 +81,8 @@ const AboutMain: React.FC = () => {
                   mouseY={mouseY}
                 />
                 <p className="text-[#F6F4D2] text-lg leading-relaxed">
-                  My journey into technology began in middle school robotics, where I discovered the joy of building
-                  something bigger than myself. Through teamwork and collaboration, I learned that the best innovations
-                  happen when diverse minds come together. That spark has grown into a passion for using technology to
-                  connect people and empower communities—a mission I've pursued through my college years at UF,
-                  especially within the vibrant Hispanic community on campus. Today, I blend technical excellence with
-                  creative design, driven by the belief that technology's greatest power lies in bringing people
-                  together.
-                </p>
-                <p className="mt-1 text-sm text-[#F6F4D2]/60 italic">
+                  My technology journey began in middle school robotics, where I discovered the challenge and excitement of designing and building solutions alongside a team. At UF, I have grown this foundation by leading technical projects and initiatives within the Hispanic community, turning ideas into tangible solutions that connect and empower others. My work blends engineering expertise with creative problem-solving, guided by a commitment to leverage technology as a force for collaboration and meaningful impact.</p>
+                <p className="mt-6 text-sm text-[#F6F4D2]/60 italic">
                   (Click or hover to flip my student profile!)
                 </p>
               </div>
