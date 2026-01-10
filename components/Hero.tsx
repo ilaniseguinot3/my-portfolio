@@ -356,7 +356,7 @@ const LetterSpan: React.FC<{
   };
 
   return (
-    <motion.span ref={letterRef} style={{ color, display: "inline-block" }}>
+    <motion.span ref={letterRef} style={{ color}}>
       {letter === " " ? "\u00A0" : letter}
     </motion.span>
   );
