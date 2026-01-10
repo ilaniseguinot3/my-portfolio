@@ -27,14 +27,6 @@ const AboutJourney: React.FC = () => {
       impact: "Built 10+ full-stack projects",
     },
     {
-      year: "Summer 2025 - Present",
-      title: "Secretary",
-      organization: "Hispanic-Latine Student Association",
-      description:
-        "Leading our digital presence by directing the web team to maintain both our public Wix site and a custom React/Firebase member portal.",
-      impact: "Enhanced digital engagement for 500+ members",
-    },
-    {
       year: "Fall 2025 - Present",
       title: "Reitz Scholar",
       organization: "University of Florida",
@@ -42,6 +34,14 @@ const AboutJourney: React.FC = () => {
         "Selected as a Reitz Scholar to participate in a year-long leadership development program focused on personal growth, community engagement, and professional excellence.",
       impact:
         "Strengthened leadership skills through faculty and professional mentor 1:1's, service projects, and reflective essays.",
+    },
+    {
+      year: "Summer 2025 - Present",
+      title: "Secretary",
+      organization: "Hispanic-Latine Student Association",
+      description:
+        "Leading our digital presence by directing the web team to maintain both our public Wix site and a custom React/Firebase member portal.",
+      impact: "Enhanced digital engagement for 500+ members",
     },
     {
       year: "Fall 2024 - Present",
@@ -196,7 +196,6 @@ const LetterSpan = ({ letter, mouseX, mouseY, initialColor }: any) => {
 
 const TimelineCard = ({ item, index }: any) => {
   const [flip, setFlip] = useState(false);
-  const [hasAnimated, setHasAnimated] = useState(false);
   const even = index % 2 === 0;
 
   return (
@@ -208,8 +207,35 @@ const TimelineCard = ({ item, index }: any) => {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      onAnimationComplete={() => setHasAnimated(true)}
     >
+      {/* Timeline Connector Line & Circle */}
+      <div className="hidden md:block">
+        {/* Circle on Timeline */}
+        <motion.div
+          className={`absolute top-1/2 ${
+            even ? "right-0" : "left-0"
+          } w-4 h-4 bg-[#FFC459] rounded-full border-4 border-white/20 shadow-lg transform -translate-y-1/2 ${
+            even ? "translate-x-1/2" : "-translate-x-1/2"
+          }`}
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+        />
+        
+        {/* Connecting Line */}
+        <motion.div
+          className={`absolute top-1/2 ${
+            even ? "right-0" : "left-0"
+          } h-0.5 bg-gradient-to-${even ? "r" : "l"} from-[#FFC459] to-transparent transform -translate-y-1/2`}
+          style={{ width: even ? "48px" : "48px" }}
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.4 }}
+        />
+      </div>
+
       <div
         className="relative h-64 cursor-pointer perspective-1000"
         onMouseEnter={() => setFlip(true)}

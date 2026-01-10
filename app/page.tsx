@@ -1,6 +1,6 @@
 import Hero from "../components/Hero";
 import Projects from "../components/Projects";
-import Footer from "../components/Footer";
+import Contact from "../components/Contact";
 import Header from "../components/Header";
 import About from "@/components/About";
 import AboutJourney from "@/components/AboutJourney";
@@ -13,7 +13,7 @@ export default function Page() {
       <About />
       <AboutJourney />
       <Projects />
-      {/* <Footer /> */}
+      <Contact />
     </div>
   );
 }

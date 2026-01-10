@@ -109,21 +109,6 @@ const Projects: React.FC = () => {
             <ProjectCard key={index} project={project} index={index} variants={itemVariants} />
           ))}
         </div>
-
-        {/* Call to Action */}
-        <motion.div className="text-center mt-20" variants={itemVariants}>
-          <p className="text-[#F6F4D2] text-xl mb-6">
-            Want to work together or just say hi?
-          </p>
-          <motion.button
-            className="px-8 py-4 bg-[#FFC459] text-gray-900 font-semibold rounded-full text-lg shadow-lg shadow-[#FFC459]/40"
-            whileHover={{ scale: 1.05, backgroundColor: "#FFD380" }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-          >
-            Get In Touch
-          </motion.button>
-        </motion.div>
       </motion.div>
     </section>
   );
