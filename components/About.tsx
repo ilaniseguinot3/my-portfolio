@@ -106,10 +106,9 @@ const AboutMain: React.FC = () => {
                   <div className="space-y-4">
                     <Info label="Major" value="Computer Science & Digital Arts" />
                     <Info label="University" value="University of Florida" />
-                    <Info label="Graduation" value="May 2027" />
+                    <Info label="GPA" value="3.84 / 4.0" />
                   </div>
                   <div className="space-y-4">
-                    <Info label="GPA" value="3.84 / 4.0" />
                     <Info
                       label="Honors"
                       value={["Reitz Scholar", "Benacquisto Scholar", "National Merit Finalist", "Dean's List"]}

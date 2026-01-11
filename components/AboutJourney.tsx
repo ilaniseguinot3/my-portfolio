@@ -259,7 +259,7 @@ const TimelineCard = ({ item, index }: any) => {
             <p className="text-[#F6F4D2]/80 font-medium mb-4">
               {item.organization}
             </p>
-            <p className="text-[#F6F4D2]/60 text-sm">Hover to learn more</p>
+            <p className="text-[#F6F4D2]/60 text-sm">Click or hover to learn more</p>
           </div>
 
           {/* Back */}
