@@ -116,7 +116,7 @@ const AboutMain: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-4 pt-6 border-t border-[#FFC459]/20">
+                {/* <div className="mt-4 pt-6 border-t border-[#FFC459]/20">
                   <motion.a
                     href="https://drive.google.com/file/d/1XeX8cwktHAsFYxdrJ-jdX4WLcSKj2HMR/view?usp=sharing"
                     target="_blank"
@@ -128,7 +128,7 @@ const AboutMain: React.FC = () => {
                     <img src="/googledrive.png" alt="Google Drive" className="w-5 h-5 object-contain" />
                     Open Resume
                   </motion.a>
-                </div>
+                </div> */}
               </div>
             </motion.div>
           </div>
