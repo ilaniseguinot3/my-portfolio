@@ -208,7 +208,7 @@ const ProjectCard = ({ project, index, variants }: any) => {
           {project.technologies.map((tech: string, i: number) => (
             <span
               key={i}
-              className="px-4 py-2 bg-[#FFC459]/20 text-[#FFC459] rounded-full text-sm font-medium border border-[#FFC459]/40"
+              className="px-4 py-2 bg-[#FFC459]/20 text-[#F6F4D2] rounded-full text-sm font-medium border border-[#FFC459]/40"
             >
               {tech}
             </span>
@@ -218,7 +218,7 @@ const ProjectCard = ({ project, index, variants }: any) => {
         {/* Description */}
         <p className="text-[#F6F4D2]/90 text-lg leading-relaxed">{project.description}</p>
 
-        {/* GitHub Link */}
+        {/* GitHub / Google Drive Link */}
         {!project.hideButton && project.link && (
           <motion.a
             href={project.link}
@@ -228,6 +228,19 @@ const ProjectCard = ({ project, index, variants }: any) => {
             whileHover={{ scale: 1.05, backgroundColor: "#FFD380" }}
             whileTap={{ scale: 0.95 }}
           >
+            {project.title === "Legend of Zelda Temple" ? (
+              <img
+                src="/googledrive.png"
+                alt="Google Drive"
+                className="w-5 h-5 object-contain"
+              />
+            ) : (
+              <img
+                src="/github.svg"
+                alt="GitHub"
+                className="w-5 h-5 object-contain"
+              />
+            )}
             View Project
             <span>→</span>
           </motion.a>
