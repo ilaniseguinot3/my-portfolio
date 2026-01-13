@@ -172,7 +172,6 @@ const AboutMain: React.FC = () => {
                       key={skill}
                       className="bg-white/10 rounded-full w-28 h-12 flex items-center justify-center text-[#F6F4D2] font-medium border border-white/20 cursor-pointer text-center shadow-sm"
                       whileHover={{
-                        scale: 1.05,
                         backgroundColor: "rgba(255,196,89,0.2)",
                         borderColor: "#FFC459",
                         color: "#FFC459",
