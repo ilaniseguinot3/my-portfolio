@@ -33,7 +33,6 @@ const AboutMain: React.FC = () => {
     <section
       ref={sectionRef}
       className="relative min-h-screen bg-gradient-to-b from-[#849F8C] to-[#4A311F] py-20 px-6 overflow-hidden"
-      // 4C8C7F possible
       onMouseMove={handleMouseMove}
       id="about"
     >
@@ -81,7 +80,8 @@ const AboutMain: React.FC = () => {
                   mouseY={mouseY}
                 />
                 <p className="text-[#F6F4D2] text-lg leading-relaxed">
-                  My technology journey began in middle school robotics, where I discovered the challenge and excitement of designing and building solutions alongside a team. At UF, I have grown this foundation by leading technical projects and initiatives within the Hispanic community, turning ideas into tangible solutions that connect and empower others. My work blends engineering expertise with creative problem-solving, guided by a commitment to leverage technology as a force for collaboration and meaningful impact.</p>
+                  My technology journey began in middle school robotics, where I discovered the challenge and excitement of designing and building solutions alongside a team. At UF, I have grown this foundation by leading technical projects and initiatives within the Hispanic community, turning ideas into tangible solutions that connect and empower others. My work blends engineering expertise with creative problem-solving, guided by a commitment to leverage technology as a force for collaboration and meaningful impact.
+                </p>
                 <p className="mt-6 text-sm text-[#F6F4D2]/60 italic">
                   (Click or hover to flip my student profile!)
                 </p>
@@ -115,20 +115,6 @@ const AboutMain: React.FC = () => {
                     />
                   </div>
                 </div>
-
-                {/* <div className="mt-4 pt-6 border-t border-[#FFC459]/20">
-                  <motion.a
-                    href="https://drive.google.com/file/d/1XeX8cwktHAsFYxdrJ-jdX4WLcSKj2HMR/view?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 w-full bg-[#FFC459] text-gray-900 font-semibold py-4 rounded-xl"
-                    whileHover={{ scale: 1.02, backgroundColor: "#FFD380" }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <img src="/googledrive.png" alt="Google Drive" className="w-5 h-5 object-contain" />
-                    Open Resume
-                  </motion.a>
-                </div> */}
               </div>
             </motion.div>
           </div>
@@ -155,27 +141,15 @@ const AboutMain: React.FC = () => {
             mouseY={mouseY}
           />
 
-          <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 flex flex-col md:flex-row justify-between shadow-2xl">
-            {Object.entries(skills).map(([category, list], index) => (
-              <div
-                key={category}
-                className={`flex-1 ${
-                  index !== Object.keys(skills).length - 1
-                    ? "md:border-r md:border-[#FFC459]/30 md:pr-4 md:mr-3"
-                    : ""
-                } mb-6 md:mb-0`}
-              >
-                <h4 className="text-lg font-semibold text-[#F6F4D2] mb-4 capitalize">{category}</h4>
-                <div className="grid grid-cols-3 gap-3">
+          <div className="space-y-6">
+            {Object.entries(skills).map(([category, list]) => (
+              <div key={category}>
+                <h4 className="text-lg font-semibold text-[#F6F4D2] mb-2 capitalize">{category}</h4>
+                <div className="flex flex-wrap gap-3">
                   {list.map((skill) => (
                     <motion.span
                       key={skill}
-                      className="bg-white/10 rounded-full w-28 h-12 flex items-center justify-center text-[#F6F4D2] font-medium border border-white/20 cursor-pointer text-center shadow-sm"
-                      whileHover={{
-                        backgroundColor: "rgba(255,196,89,0.2)",
-                        borderColor: "#FFC459",
-                        color: "#FFC459",
-                      }}
+                      className="inline-block bg-white/10 rounded-full px-4 py-2 flex items-center justify-center text-[#F6F4D2] font-medium border border-white/20 shadow-sm flex-shrink-0"
                       transition={{ duration: 0.2 }}
                     >
                       {skill}
