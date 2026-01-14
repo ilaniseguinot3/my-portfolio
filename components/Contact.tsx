@@ -9,7 +9,7 @@ const Contact: React.FC = () => {
 
   return (
     <section
-      className="relative bg-gradient-to-b from-[#849F8C] to-[#27321F] py-20 px-6 overflow-hidden"
+      className="relative bg-gradient-to-b from-[#849F8C] to-[#27321F] py-5 px-6 pb-24 overflow-hidden"
       id="contact"
     >
       <motion.div
@@ -18,8 +18,26 @@ const Contact: React.FC = () => {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
+        {/* LinkedIn Post Embed */}
+        <motion.div className="text-center mb-20" variants={itemVariants}>
+          <p className="text-[#F6F4D2] text-xl mb-6">
+            Come check out my latest post!
+          </p>
+          <div className="flex justify-center">
+            <iframe
+              src="https://www.linkedin.com/embed/feed/update/urn:li:share:7417249858044198912?collapsed=1"
+              height="593"
+              width="504"
+              frameBorder="0"
+              allowFullScreen
+              title="Embedded LinkedIn post"
+              className="rounded-xl shadow-lg shadow-[#00000040]"
+            ></iframe>
+          </div>
+        </motion.div>
+
         {/* Call to Action */}
-        <motion.div className="text-center mt-0 mb-20" variants={itemVariants}>
+        <motion.div className="text-center mt-0" variants={itemVariants}>
           <p className="text-[#F6F4D2] text-xl mb-6">
             Want to work together or just say hi?
           </p>
