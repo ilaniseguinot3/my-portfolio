@@ -21,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${domine.variable} antialiased`}>
         {children}
+        <Analytics />
       </body>
     </html>
   );
