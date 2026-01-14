@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Domine } from "next/font/google"; // <-- add this
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next"
 
 const domine = Domine({
   subsets: ["latin"],
