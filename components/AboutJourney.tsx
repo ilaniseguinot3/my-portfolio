@@ -1,22 +1,9 @@
 "use client";
-import { motion, useMotionValue } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-
-const splitLetters = (text: string) => text.split("");
+import { motion } from "framer-motion";
+import { useState } from "react";
+import SectionHeader from "./SectionHeader";
 
 const AboutJourney: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (sectionRef.current) {
-      const rect = sectionRef.current.getBoundingClientRect();
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
-    }
-  };
-
   const involvements = [
     {
       year: "Fall 2025 - Present",
@@ -92,44 +79,20 @@ const AboutJourney: React.FC = () => {
 
   return (
     <section
-      ref={sectionRef}
-      onMouseMove={handleMouseMove}
-      className="relative min-h-screen py-20 px-6 overflow-hidden"
       id="journey"
+      className="relative bg-[#172A3A] text-[#EDE4D3] py-24 px-8 lg:px-12"
     >
-      {/* --- Smooth Static Background Image --- */}
-      <div className="absolute -inset-1 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-[url('/flamboyan.jpg')] bg-cover bg-center scale-105"
-          style={{
-            filter: "blur(16px) brightness(0.6)",
-            transform: "translateZ(0)",
-          }}
-        />
-        <div className="absolute inset-0 bg-black/30" />
-      </div>
-
-      {/* Aura Effect */}
-      <div
-        className="pointer-events-none absolute inset-0 transition duration-75"
-        style={{
-          background: `radial-gradient(500px circle at ${mouseX.get()}px ${mouseY.get()}px, rgba(255,255,255,0.1), transparent 50%)`,
-          mixBlendMode: "overlay",
-        }}
-      />
-
-      <div className="relative max-w-6xl mx-auto z-10">
-        {/* Title */}
-        <HeaderWithAura
-          text="My Journey"
-          className="text-4xl font-semibold text-[#F6F4D2] mb-12 text-center drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
-          mouseX={mouseX}
-          mouseY={mouseY}
+      <div className="relative max-w-6xl mx-auto">
+        <SectionHeader
+          number="03"
+          label="My Journey"
+          title="Where I've Been"
+          dark
         />
 
         {/* Timeline */}
         <div className="relative max-w-4xl mx-auto">
-          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-[#FFC459]/40 transform -translate-x-1/2 hidden md:block" />
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-[#C2A36B]/30 transform -translate-x-1/2 hidden md:block" />
           {involvements.map((item, index) => (
             <TimelineCard key={index} item={item} index={index} />
           ))}
@@ -139,62 +102,21 @@ const AboutJourney: React.FC = () => {
   );
 };
 
-/* --- Subcomponents --- */
-
-const HeaderWithAura = ({ text, className = "", mouseX, mouseY }: any) => (
-  <h3 className={className}>
-    {splitLetters(text).map((letter, i) => (
-      <LetterSpan
-        key={i}
-        letter={letter}
-        mouseX={mouseX}
-        mouseY={mouseY}
-        initialColor="#F6F4D2"
-      />
-    ))}
-  </h3>
-);
-
-const LetterSpan = ({ letter, mouseX, mouseY, initialColor }: any) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [color, setColor] = useState(initialColor);
-
-  useEffect(() => {
-    const update = () => {
-      const latestX = mouseX.get();
-      const latestY = mouseY.get();
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      const section = ref.current.closest("section");
-      if (!section) return;
-      const sectionRect = section.getBoundingClientRect();
-      const relX = rect.left + rect.width / 2 - sectionRect.left;
-      const relY = rect.top + rect.height / 2 - sectionRect.top;
-      const distance = Math.hypot(latestX - relX, latestY - relY);
-      const intensity = Math.max(0, 1 - distance / 250);
-      const start = [246, 244, 210];
-      const end = [255, 196, 89];
-      const r = Math.round(start[0] + (end[0] - start[0]) * intensity);
-      const g = Math.round(start[1] + (end[1] - start[1]) * intensity);
-      const b = Math.round(start[2] + (end[2] - start[2]) * intensity);
-      setColor(`rgb(${r},${g},${b})`);
-    };
-    const subX = mouseX.onChange(update);
-    const subY = mouseY.onChange(update);
-    return () => {
-      subX();
-      subY();
-    };
-  }, [mouseX, mouseY]);
-
-  return (
-    <motion.span ref={ref} style={{ color, display: "inline-block" }}>
-      {letter === " " ? "\u00A0" : letter}
-    </motion.span>
-  );
+type TimelineItem = {
+  year: string;
+  title: string;
+  organization: string;
+  description: string;
+  impact: string;
 };
 
-const TimelineCard = ({ item, index }: any) => {
+const TimelineCard = ({
+  item,
+  index,
+}: {
+  item: TimelineItem;
+  index: number;
+}) => {
   const [flip, setFlip] = useState(false);
   const even = index % 2 === 0;
 
@@ -203,32 +125,27 @@ const TimelineCard = ({ item, index }: any) => {
       className={`relative mb-12 md:w-1/2 ${
         even ? "md:pr-12" : "md:pl-12 md:ml-auto"
       }`}
-      initial={{ opacity: 0, x: even ? -50 : 50 }}
+      initial={{ opacity: 0, x: even ? -40 : 40 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      {/* Timeline Connector Line & Circle */}
+      {/* Timeline marker */}
       <div className="hidden md:block">
-        {/* Circle on Timeline */}
         <motion.div
           className={`absolute top-1/2 ${
-            even ? "right-0" : "left-0"
-          } w-4 h-4 bg-[#FFC459] rounded-full border-4 border-white/20 shadow-lg transform -translate-y-1/2 ${
-            even ? "translate-x-1/2" : "-translate-x-1/2"
-          }`}
+            even ? "right-0 translate-x-1/2" : "left-0 -translate-x-1/2"
+          } w-3.5 h-3.5 bg-[#C2A36B] rounded-full ring-4 ring-[#172A3A] transform -translate-y-1/2`}
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.4 }}
         />
-        
-        {/* Connecting Line */}
         <motion.div
           className={`absolute top-1/2 ${
             even ? "right-0" : "left-0"
-          } h-0.5 bg-gradient-to-${even ? "r" : "l"} from-[#FFC459] to-transparent transform -translate-y-1/2`}
-          style={{ width: even ? "48px" : "48px" }}
+          } h-px bg-[#C2A36B]/40 transform -translate-y-1/2`}
+          style={{ width: "48px" }}
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
@@ -237,7 +154,8 @@ const TimelineCard = ({ item, index }: any) => {
       </div>
 
       <div
-        className="relative h-64 cursor-pointer perspective-1000"
+        className="relative h-60 cursor-pointer"
+        style={{ perspective: 1000 }}
         onMouseEnter={() => setFlip(true)}
         onMouseLeave={() => setFlip(false)}
       >
@@ -249,29 +167,38 @@ const TimelineCard = ({ item, index }: any) => {
         >
           {/* Front */}
           <div
-            className="absolute w-full h-full bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/30 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
+            className="absolute w-full h-full bg-[#EDE4D3]/[0.05] backdrop-blur-sm rounded-sm p-6 border border-[#EDE4D3]/15 flex flex-col"
             style={{ backfaceVisibility: "hidden" }}
           >
-            <div className="text-[#FFC459] font-semibold mb-2">{item.year}</div>
-            <h4 className="text-2xl font-bold text-[#F6F4D2] mb-2">
+            <div className="text-[#C2A36B] text-sm font-semibold tracking-wide mb-3">
+              {item.year}
+            </div>
+            <h4 className="text-2xl font-bold text-[#EDE4D3] mb-2">
               {item.title}
             </h4>
-            <p className="text-[#F6F4D2]/80 font-medium mb-4">
+            <p className="text-[#EDE4D3]/70 font-medium mb-4">
               {item.organization}
             </p>
-            <p className="text-[#F6F4D2]/60 text-sm">Click or hover to learn more</p>
+            <p className="mt-auto text-xs uppercase tracking-[0.2em] text-[#EDE4D3]/50">
+              Hover to learn more →
+            </p>
           </div>
 
           {/* Back */}
           <div
-            className="absolute w-full h-full bg-[#FFC459]/20 backdrop-blur-md rounded-2xl p-6 border border-[#FFC459]/60 shadow-[0_4px_30px_rgba(255,196,89,0.25)]"
-            style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+            className="absolute w-full h-full bg-[#9B2D22]/15 backdrop-blur-sm rounded-sm p-6 border border-[#9B2D22]/50 flex flex-col"
+            style={{
+              backfaceVisibility: "hidden",
+              transform: "rotateY(180deg)",
+            }}
           >
-            <p className="text-[#F6F4D2]/90 mb-4">{item.description}</p>
+            <p className="text-[#EDE4D3]/90 text-sm leading-relaxed mb-4 overflow-y-auto">
+              {item.description}
+            </p>
             <div className="mt-auto">
-              <div className="inline-block bg-[#FFC459] text-gray-900 px-4 py-2 rounded-full text-sm font-semibold">
+              <span className="inline-block bg-[#C2A36B] text-[#172A3A] px-4 py-2 rounded-sm text-xs font-semibold">
                 {item.impact}
-              </div>
+              </span>
             </div>
           </div>
         </motion.div>

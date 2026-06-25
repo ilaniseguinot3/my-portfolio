@@ -1,63 +1,65 @@
 "use client";
-import { motion, useMotionValue } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import SectionHeader from "./SectionHeader";
 
-const splitLetters = (text: string) => text.split("");
-
-const AboutMain: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+const About: React.FC = () => {
   const [flipped, setFlipped] = useState(false);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (sectionRef.current) {
-      const rect = sectionRef.current.getBoundingClientRect();
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
-    }
-  };
-
   const skills = {
-    languages: ["C++", "Python", "Java", "JavaScript", "TypeScript", "C#", "HTML/CSS", "SQL"],
-    frameworks: ["React", "React Native", "Node.js", "Next.js", "MongoDB", "Tailwind CSS", "Firebase", "Supabase", "Vite", "Expo"],
-    tools: ["Unity", "Blender", "Figma", "Git", "VSCode", "Jira", "Maya", "Processing"],
+    languages: [
+      "C++",
+      "Python",
+      "Java",
+      "JavaScript",
+      "TypeScript",
+      "C#",
+      "HTML/CSS",
+      "SQL",
+    ],
+    frameworks: [
+      "React",
+      "React Native",
+      "Node.js",
+      "Next.js",
+      "MongoDB",
+      "Tailwind CSS",
+      "Firebase",
+      "Supabase",
+      "Vite",
+      "Expo",
+    ],
+    tools: [
+      "Unity",
+      "Blender",
+      "Figma",
+      "Git",
+      "VSCode",
+      "Jira",
+      "Maya",
+      "Processing",
+    ],
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+  const fadeUp = {
+    hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
   return (
     <section
-      ref={sectionRef}
-      className="relative min-h-screen bg-gradient-to-b from-[#849F8C] to-[#4A311F] py-20 px-6 overflow-hidden"
-      onMouseMove={handleMouseMove}
       id="about"
+      className="relative bg-[#ECE5D8] text-[#172A3A] py-24 px-8 lg:px-12"
     >
-      <motion.div
-        className="relative max-w-6xl mx-auto z-10"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <HeaderWithAura
-          text="About Me"
-          className="text-5xl font-bold text-center mb-16 text-[#F6F4D2]"
-          mouseX={mouseX}
-          mouseY={mouseY}
-          variants={itemVariants}
-        />
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader number="02" label="About Me" title="Get to Know Me" />
 
         {/* Intro + Photo Row */}
-        <motion.div
-          variants={itemVariants}
-          className="mb-20 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center"
-        >
+        <div className="mb-24 grid md:grid-cols-2 gap-12 items-center">
           {/* Left: Flippable Card */}
           <div
-            className="relative w-full h-[480px] cursor-pointer perspective-1000"
+            className="relative w-full h-[520px] cursor-pointer"
+            style={{ perspective: 1000 }}
             onClick={() => setFlipped(!flipped)}
             onMouseEnter={() => setFlipped(true)}
             onMouseLeave={() => setFlipped(false)}
@@ -70,49 +72,89 @@ const AboutMain: React.FC = () => {
             >
               {/* Front: About Me Text */}
               <div
-                className="absolute w-full h-full bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl"
+                className="absolute w-full h-full bg-[#172A3A] text-[#EDE4D3] rounded-sm p-8 shadow-xl flex flex-col"
                 style={{ backfaceVisibility: "hidden" }}
               >
-                <HeaderWithAura
-                  text="Hi Everyone!"
-                  className="text-3xl font-semibold text-[#F6F4D2] mb-4"
-                  mouseX={mouseX}
-                  mouseY={mouseY}
-                />
-                <p className="text-[#F6F4D2] text-lg leading-relaxed">
-                  My technology journey began in middle school robotics, where I discovered the challenge and excitement of designing and building solutions alongside a team. At UF, I have grown this foundation by leading technical projects and initiatives within the Hispanic community, turning ideas into tangible solutions that connect and empower others. My work blends engineering expertise with creative problem-solving, guided by a commitment to leverage technology as a force for collaboration and meaningful impact.
+                <h3 className="text-2xl font-bold mb-4">Hi Everyone!</h3>
+                <span className="block w-10 h-px bg-[#C2A36B] mb-5" />
+                <p className="text-[#EDE4D3]/85 leading-relaxed">
+                  My technology journey began in middle school robotics, where I
+                  discovered the challenge and excitement of designing and
+                  building solutions alongside a team. At UF, I have grown this
+                  foundation by leading technical projects and initiatives within
+                  the Hispanic community, turning ideas into tangible solutions
+                  that connect and empower others. My work blends engineering
+                  expertise with creative problem-solving, guided by a commitment
+                  to leverage technology as a force for collaboration and
+                  meaningful impact.
                 </p>
-                <p className="mt-6 text-sm text-[#F6F4D2]/60 italic">
-                  (Click or hover to flip my student profile!)
+                <p className="mt-auto pt-6 text-xs uppercase tracking-[0.2em] text-[#C2A36B]">
+                  Hover to flip my student profile →
                 </p>
               </div>
 
-              {/* Back: Student ID */}
+              {/* Back: Student Profile */}
               <div
-                className="absolute w-full h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg rounded-3xl p-8 border-2 border-[#FFC459]/30 shadow-2xl"
-                style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                className="absolute w-full h-full bg-[#AE9D80] text-[#172A3A] rounded-sm p-8 shadow-xl"
+                style={{
+                  backfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                }}
               >
-                <div className="flex items-center justify-between mb-6 pb-6 border-b border-[#FFC459]/20">
+                <div className="flex items-center justify-between mb-4 pb-4 border-b border-[#172A3A]/20">
                   <div>
-                    <h3 className="text-3xl font-bold text-[#F6F4D2]">Ilani Seguinot</h3>
-                    <p className="text-[#FFC459] font-medium">Student Profile</p>
+                    <h3 className="text-2xl font-bold">Ilani Seguinot</h3>
+                    <p className="text-[#9B2D22] font-semibold text-sm uppercase tracking-[0.15em]">
+                      Student Profile
+                    </p>
                   </div>
-                  <div className="w-20 h-20 bg-[#FFC459]/20 rounded-full flex items-center justify-center border-2 border-[#FFC459]">
-                    <span className="text-3xl">🎓</span>
+                  <div className="w-14 h-14 bg-[#172A3A]/10 rounded-full flex items-center justify-center border border-[#172A3A]/30">
+                    <span className="text-2xl">🎓</span>
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-3">
                     <Info label="Major" value="Computer Science & Digital Arts" />
                     <Info label="University" value="University of Florida" />
-                    <Info label="GPA" value="3.84 / 4.0" />
+                    <Info label="GPA" value="3.86 / 4.0" />
                   </div>
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <Info
                       label="Honors"
-                      value={["Reitz Scholar", "Benacquisto Scholar", "National Merit Finalist", "Dean's List"]}
+                      value={[
+                        "Reitz Scholar",
+                        "Benacquisto Scholar",
+                        "National Merit Finalist",
+                        "Dean's List",
+                      ]}
                     />
+                  </div>
+                </div>
+
+                {/* Relevant Coursework */}
+                <div className="mt-5 pt-4 border-t border-[#172A3A]/20">
+                  <p className="text-[#9B2D22] text-xs font-semibold uppercase tracking-wide mb-2">
+                    Relevant Coursework
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      "Data Structures & Algorithms",
+                      "Human-Computer Interaction",
+                      "Software Engineering",
+                      "Game Design + Development",
+                      "Intro to Virtual Reality",
+                      "Game Engine Development",
+                      "Linear Algebra",
+                      "Computer Graphics",
+                    ].map((course) => (
+                      <span
+                        key={course}
+                        className="inline-block bg-[#172A3A]/10 border border-[#172A3A]/20 rounded-sm px-2 py-1 text-[11px] font-medium text-[#172A3A]"
+                      >
+                        {course}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -120,111 +162,80 @@ const AboutMain: React.FC = () => {
           </div>
 
           {/* Right: Image */}
-          <div className="relative flex justify-center">
-            <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-3xl overflow-hidden shadow-[0_0_30px_rgba(255,196,89,0.4)] border border-[#FFC459]/40">
+          <motion.div
+            className="relative flex justify-center"
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="relative w-80 h-96 rounded-sm overflow-hidden shadow-2xl border-4 border-[#AE9D80]">
               <img
                 src="/headshot.jpg"
                 alt="Ilani Seguinot"
-                className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-500"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
             </div>
-          </div>
-        </motion.div>
+            <span className="absolute -bottom-4 -left-4 w-24 h-24 border-l-2 border-b-2 border-[#9B2D22] -z-0" />
+          </motion.div>
+        </div>
 
         {/* Technical Skills */}
-        <motion.div variants={itemVariants} className="max-w-6xl mx-auto relative">
-          <HeaderWithAura
-            text="Technical Skills"
-            className="text-3xl font-semibold text-[#F6F4D2] mb-6 text-center md:text-left"
-            mouseX={mouseX}
-            mouseY={mouseY}
-          />
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+        >
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-xs uppercase tracking-[0.3em] font-semibold text-[#172A3A]/60">
+              Technical Skills
+            </span>
+            <span className="flex-1 h-px bg-[#172A3A]/15" />
+          </div>
 
-          <div className="space-y-6">
+          <div className="space-y-8">
             {Object.entries(skills).map(([category, list]) => (
               <div key={category}>
-                <h4 className="text-lg font-semibold text-[#F6F4D2] mb-2 capitalize">{category}</h4>
+                <h4 className="text-sm font-semibold text-[#9B2D22] mb-3 capitalize tracking-wide">
+                  {category}
+                </h4>
                 <div className="flex flex-wrap gap-3">
                   {list.map((skill) => (
-                    <motion.span
+                    <span
                       key={skill}
-                      className="inline-block bg-white/10 rounded-full px-4 py-2 flex items-center justify-center text-[#F6F4D2] font-medium border border-white/20 shadow-sm flex-shrink-0"
-                      transition={{ duration: 0.2 }}
+                      className="inline-block bg-[#172A3A]/[0.04] rounded-sm px-4 py-2 text-[#172A3A] font-medium border border-[#172A3A]/15 hover:border-[#9B2D22]/50 hover:bg-[#9B2D22]/5 transition-colors"
                     >
                       {skill}
-                    </motion.span>
+                    </span>
                   ))}
                 </div>
               </div>
             ))}
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 };
 
 const Info = ({ label, value }: { label: string; value: string | string[] }) => (
   <div>
-    <p className="text-[#FFC459] text-sm font-semibold uppercase tracking-wide mb-1">{label}</p>
+    <p className="text-[#9B2D22] text-xs font-semibold uppercase tracking-wide mb-1">
+      {label}
+    </p>
     {Array.isArray(value) ? (
       <div className="flex flex-col gap-1">
         {value.map((v, i) => (
-          <p key={i} className="text-[#F6F4D2] font-medium">{v}</p>
+          <p key={i} className="text-[#172A3A] font-medium text-sm">
+            {v}
+          </p>
         ))}
       </div>
     ) : (
-      <p className="text-[#F6F4D2] font-medium">{value}</p>
+      <p className="text-[#172A3A] font-medium text-sm">{value}</p>
     )}
   </div>
 );
 
-const HeaderWithAura = ({ text, className = "", variants, mouseX, mouseY }: any) => (
-  <motion.h3 className={className} variants={variants}>
-    {splitLetters(text).map((letter: string, i: number) => (
-      <LetterSpan key={i} letter={letter} mouseX={mouseX} mouseY={mouseY} initialColor="#F6F4D2" />
-    ))}
-  </motion.h3>
-);
-
-const LetterSpan = ({ letter, mouseX, mouseY, initialColor }: any) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [color, setColor] = useState(initialColor);
-
-  useEffect(() => {
-    const update = () => {
-      const latestX = mouseX.get();
-      const latestY = mouseY.get();
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      const section = ref.current.closest("section");
-      if (!section) return;
-      const sectionRect = section.getBoundingClientRect();
-      const relX = rect.left + rect.width / 2 - sectionRect.left;
-      const relY = rect.top + rect.height / 2 - sectionRect.top;
-      const distance = Math.hypot(latestX - relX, latestY - relY);
-      const intensity = Math.max(0, 1 - distance / 250);
-      const start = [246, 244, 210];
-      const end = [255, 196, 89];
-      const r = Math.round(start[0] + (end[0] - start[0]) * intensity);
-      const g = Math.round(start[1] + (end[1] - start[1]) * intensity);
-      const b = Math.round(start[2] + (end[2] - start[2]) * intensity);
-      setColor(`rgb(${r},${g},${b})`);
-    };
-    const subX = mouseX.onChange(update);
-    const subY = mouseY.onChange(update);
-    return () => {
-      subX();
-      subY();
-    };
-  }, [mouseX, mouseY]);
-
-  return (
-    <motion.span ref={ref} style={{ color, display: "inline-block" }}>
-      {letter === " " ? "\u00A0" : letter}
-    </motion.span>
-  );
-};
-
-export default AboutMain;
+export default About;

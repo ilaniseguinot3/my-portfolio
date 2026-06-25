@@ -4,26 +4,26 @@ import { useEffect, useState } from "react";
 
 const Header: React.FC = () => {
   const [activeSection, setActiveSection] = useState("");
+  const [scrolled, setScrolled] = useState(false);
 
   const navItems = [
-    { id: "hero", label: "Home" },
-    { id: "about", label: "About Me" },
+    { id: "about", label: "About" },
     { id: "journey", label: "Journey" },
-    { id: "projects", label: "Projects" },
-    { id: "contact", label: "Contact Me" },
+    { id: "projects", label: "Work" },
+    { id: "contact", label: "Contact" },
   ];
 
-  // --- Scroll detection logic for active section ---
+  // --- Scroll detection: active section + header background ---
   useEffect(() => {
     const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+
       const sections = navItems.map((item) => ({
         id: item.id,
         element: document.getElementById(item.id),
       }));
 
       let currentSection = "";
-
-      // Find which section is in the viewport
       for (const section of sections) {
         if (section.element) {
           const rect = section.element.getBoundingClientRect();
@@ -34,89 +34,77 @@ const Header: React.FC = () => {
         }
       }
 
-      // Fallback: pick the section closest to top if none intersect cleanly
-      if (!currentSection) {
-        let minDistance = Infinity;
-        for (const section of sections) {
-          if (section.element) {
-            const rect = section.element.getBoundingClientRect();
-            const distance = Math.abs(rect.top);
-            if (distance < minDistance) {
-              minDistance = distance;
-              currentSection = section.id;
-            }
-          }
-        }
-      }
-
       if (currentSection && currentSection !== activeSection) {
         setActiveSection(currentSection);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // initial highlight on mount
-
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [activeSection]);
 
-  // Smooth scroll to section
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const headerOffset = 0;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-
+      const offsetPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
       setActiveSection(sectionId);
     }
   };
 
   return (
     <motion.header
-      className="fixed top-0 left-0 w-full z-50 translate-x-205 translate-y-3"
-      initial={{ y: 0, opacity: 0 }}
+      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
+        scrolled ? "bg-[#172A3A]/90 backdrop-blur-md shadow-lg" : "bg-transparent"
+      }`}
+      initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <nav className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex justify-between items-center">
-          {/* Navigation Links */}
-          <div className="flex gap-8 relative">
-            {/* Background bubble */}
-            <div className="absolute inset-0 -inset-x-6 -inset-y-3 bg-black/20 backdrop-blur-sm rounded-full"></div>
+      <nav className="max-w-7xl mx-auto px-8 lg:px-12 py-6 flex items-center justify-between">
+        {/* Monogram */}
+        <button
+          onClick={() => scrollToSection("hero")}
+          className="text-2xl tracking-[0.3em] text-[#EDE4D3] font-bold"
+        >
+          I<span className="text-[#C2A36B]"> / </span>S
+        </button>
 
-            {navItems.map((item) => (
-              <motion.button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`relative text-lg font-medium transition-colors z-10 ${
-                  activeSection === item.id
-                    ? "text-[#FFC459]"
-                    : "text-[#D3E4E4]"
-                }`}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {item.label}
-                {activeSection === item.id && (
-                  <motion.div
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#FFC459]"
-                    layoutId="underline"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                )}
-              </motion.button>
-            ))}
-          </div>
+        {/* Center nav links */}
+        <div className="hidden md:flex gap-10">
+          {navItems.map((item) => (
+            <motion.button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={`relative text-xs font-semibold uppercase tracking-[0.2em] transition-colors ${
+                activeSection === item.id
+                  ? "text-[#C2A36B]"
+                  : "text-[#EDE4D3]/80 hover:text-[#EDE4D3]"
+              }`}
+              whileHover={{ y: -2 }}
+            >
+              {item.label}
+              {activeSection === item.id && (
+                <motion.div
+                  className="absolute -bottom-2 left-0 right-0 h-px bg-[#C2A36B]"
+                  layoutId="nav-underline"
+                />
+              )}
+            </motion.button>
+          ))}
         </div>
+
+        {/* CTA button */}
+        <motion.button
+          onClick={() => scrollToSection("contact")}
+          className="bg-[#9B2D22] text-[#EDE4D3] text-xs font-semibold uppercase tracking-[0.2em] px-6 py-3 rounded-sm shadow-md"
+          whileHover={{ scale: 1.05, backgroundColor: "#B23728" }}
+          whileTap={{ scale: 0.96 }}
+        >
+          Let&apos;s Connect
+        </motion.button>
       </nav>
     </motion.header>
   );
