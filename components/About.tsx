@@ -41,6 +41,17 @@ const About: React.FC = () => {
     ],
   };
 
+  const coursework = [
+    "Data Structures & Algorithms",
+    "Human-Computer Interaction",
+    "Software Engineering",
+    "Game Design + Development",
+    "Intro to Virtual Reality",
+    "Game Engine Development",
+    "Linear Algebra",
+    "Computer Graphics",
+  ];
+
   const fadeUp = {
     hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -119,42 +130,26 @@ const About: React.FC = () => {
                     <Info label="University" value="University of Florida" />
                     <Info label="GPA" value="3.86 / 4.0" />
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-6">
                     <Info
                       label="Honors"
                       value={[
-                        "Reitz Scholar",
+                        "Engineering Leadership Circle",
+                        "Reitz Scholar 2025-2026 Cohort",
                         "Benacquisto Scholar",
                         "National Merit Finalist",
                         "Dean's List",
                       ]}
                     />
-                  </div>
-                </div>
-
-                {/* Relevant Coursework */}
-                <div className="mt-5 pt-4 border-t border-[#172A3A]/20">
-                  <p className="text-[#9B2D22] text-xs font-semibold uppercase tracking-wide mb-2">
-                    Relevant Coursework
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {[
-                      "Data Structures & Algorithms",
-                      "Human-Computer Interaction",
-                      "Software Engineering",
-                      "Game Design + Development",
-                      "Intro to Virtual Reality",
-                      "Game Engine Development",
-                      "Linear Algebra",
-                      "Computer Graphics",
-                    ].map((course) => (
-                      <span
-                        key={course}
-                        className="inline-block bg-[#172A3A]/10 border border-[#172A3A]/20 rounded-sm px-2 py-1 text-[11px] font-medium text-[#172A3A]"
-                      >
-                        {course}
-                      </span>
-                    ))}
+                    <Info
+                      label="Involvement"
+                      value={[
+                        "Dream Team Engineering",
+                        "Society of Hispanic Professional Engineers",
+                        "Hispanic-Latine Student Association",
+                        "Codepath",
+                      ]}
+                    />
                   </div>
                 </div>
               </div>
@@ -212,6 +207,22 @@ const About: React.FC = () => {
                 </div>
               </div>
             ))}
+
+            <div>
+              <h4 className="text-sm font-semibold text-[#9B2D22] mb-3 capitalize tracking-wide">
+                Relevant Coursework
+              </h4>
+              <div className="flex flex-wrap gap-3">
+                {coursework.map((course) => (
+                  <span
+                    key={course}
+                    className="inline-block bg-[#172A3A]/[0.04] rounded-sm px-4 py-2 text-[#172A3A] font-medium border border-[#172A3A]/15 hover:border-[#9B2D22]/50 hover:bg-[#9B2D22]/5 transition-colors"
+                  >
+                    {course}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>

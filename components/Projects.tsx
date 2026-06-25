@@ -92,9 +92,9 @@ const Projects: React.FC = () => {
           title="Technical Projects"
         />
 
-        <div className="space-y-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} />
+            <ProjectCard key={index} project={project} />
           ))}
         </div>
       </div>
@@ -102,28 +102,18 @@ const Projects: React.FC = () => {
   );
 };
 
-const ProjectCard = ({
-  project,
-  index,
-}: {
-  project: Project;
-  index: number;
-}) => {
-  const reversed = index % 2 === 1;
-
+const ProjectCard = ({ project }: { project: Project }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.6 }}
-      className={`flex flex-col ${
-        reversed ? "md:flex-row-reverse" : "md:flex-row"
-      } gap-8 items-stretch bg-[#172A3A] text-[#EDE4D3] rounded-sm p-6 md:p-8 shadow-xl`}
+      className="flex flex-col gap-6 bg-[#172A3A] text-[#EDE4D3] rounded-sm p-6 md:p-8 shadow-xl h-full"
     >
       {/* Project Media */}
-      <div className="w-full md:w-1/2">
-        <div className="relative w-full h-64 md:h-full min-h-[16rem] rounded-sm overflow-hidden shadow-lg">
+      <div className="w-full">
+        <div className="relative w-full h-56 rounded-sm overflow-hidden shadow-lg">
           {project.video ? (
             <iframe
               src={project.video}
@@ -152,7 +142,7 @@ const ProjectCard = ({
       </div>
 
       {/* Project Info */}
-      <div className="w-full md:w-1/2 flex flex-col justify-center space-y-4">
+      <div className="w-full flex flex-col flex-1 space-y-4">
         <h3 className="text-2xl md:text-3xl font-bold text-[#EDE4D3]">
           {project.title}
         </h3>
