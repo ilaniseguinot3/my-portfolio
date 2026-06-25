@@ -1,25 +1,38 @@
 "use client";
-import { motion, useMotionValue } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import SectionHeader from "./SectionHeader";
 
-const splitLetters = (text: string) => text.split("");
+type Category = "react" | "unity" | "cpp" | "uiux";
+type Tab = "all" | Category;
+
+type Project = {
+  title: string;
+  category: Category;
+  video?: string;
+  image?: string;
+  website?: string;
+  technologies: string[];
+  description: string;
+  link?: string;
+  hideButton?: boolean;
+};
+
+const tabs: { id: Tab; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "react", label: "React" },
+  { id: "unity", label: "Unity" },
+  { id: "cpp", label: "C++/Java" },
+  { id: "uiux", label: "UI/UX Design" },
+];
 
 const Projects: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const [activeTab, setActiveTab] = useState<Tab>("all");
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (sectionRef.current) {
-      const rect = sectionRef.current.getBoundingClientRect();
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
-    }
-  };
-
-  const projects = [
+  const projects: Project[] = [
     {
       title: "Gator Marketplace",
+      category: "react",
       video: "https://www.youtube.com/embed/1UYjbEZ3ttc?si=BwtTr0_wYgSTmpBt",
       technologies: ["React", "Vite", "MongoDB", "Auth0", "CSS", "JavaScript"],
       description:
@@ -28,21 +41,49 @@ const Projects: React.FC = () => {
     },
     {
       title: "Culinara: Meal Planner & Pantry",
-      video: "https://www.youtube.com/embed/DRmWa-gMS98?si=FM2ImqZPlGNtvRWd&amp;start=190",
+      category: "react",
+      video:
+        "https://www.youtube.com/embed/DRmWa-gMS98?si=FM2ImqZPlGNtvRWd&amp;start=190",
       technologies: ["React Native", "Expo", "TypeScript", "Supabase"],
       description:
         "Engineered a mobile recipe app with dynamic CRUD operations and Supabase authentication. Crafted interactive UI components, including modals, scrollable grids, and editable meal plans.",
       link: "https://github.com/PatrickLeimer/Culinara",
     },
     {
+      title: "Thorn & Thistle: Apothecary Simulator",
+      category: "unity",
+      video: "https://www.youtube.com/embed/X6XT0dCsiCk?si=2Yava_ouHokdByr6",
+      technologies: ["Unity", "C#"],
+      description:
+        "Served as Lead Programmer for a cozy apothecary simulation game where players prescribe treatments for customer ailments, delegating development tasks and coordinating gameplay system implementation. Developed backend systems including inventory management, potion crafting logic, and diagnosis mechanics.",
+      link: "https://github.com/ilaniseguinot3/ThornandThistle",
+    },
+    {
       title: "Aetherion: 2D Platformer",
+      category: "unity",
       video: "https://www.youtube.com/embed/iGfUWZmp0jg?si=lF4Z_Odhse5Mcfwt",
       technologies: ["Unity", "C#"],
       description:
         "Developed core mechanics, enemy AI, and level design for a 2D platformer. Integrated original artwork, sound design, and dynamic lighting for immersive gameplay.",
     },
     {
+      title: "Java Hollow: VR Forest Café Experience",
+      category: "unity",
+      video: "https://www.youtube.com/embed/Ed-hmlwKeYI?si=ZUk2PRft1R_rxGKN",
+      technologies: [
+        "Unity",
+        "C#",
+        "VR Interaction",
+        "Spatial Audio",
+        "Dynamic Lighting",
+      ],
+      description:
+        "Created an immersive VR café experience set in a forest hollow. Users can fully interact with the coffee station: pour espresso, add milk, refill the machine, and enjoy their virtual drink. Integrated dynamic day/night lighting, realistic ambient sounds, and environmental interactions for a relaxing, engaging experience.",
+      link: "https://github.com/danielromerom/Java-Hollow",
+    },
+    {
       title: "Legend of Zelda Temple",
+      category: "unity",
       image: "/zelda.png",
       technologies: ["Blender"],
       description:
@@ -51,6 +92,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "FlixHabit",
+      category: "cpp",
       image: "/flixhabit.png",
       website: "https://flixhabit.netlify.app/",
       technologies: ["C++", "JSON", "Graphs", "MinHeap"],
@@ -59,15 +101,8 @@ const Projects: React.FC = () => {
       link: "https://github.com/vincinious/FlixHabit",
     },
     {
-      title: "Java Hollow: VR Forest Café Experience",
-      video: "https://www.youtube.com/embed/Ed-hmlwKeYI?si=ZUk2PRft1R_rxGKN",
-      technologies: ["Unity", "C#", "VR Interaction", "Spatial Audio", "Dynamic Lighting"],
-      description:
-        "Created an immersive VR café experience set in a forest hollow. Users can fully interact with the coffee station: pour espresso, add milk, refill the machine, and enjoy their virtual drink. Integrated dynamic day/night lighting, realistic ambient sounds, and environmental interactions for a relaxing, engaging experience.",
-      link: "https://github.com/danielromerom/Java-Hollow",
-    },
-    {
       title: "Minesweeper (C++ & SFML)",
+      category: "cpp",
       video: "https://www.youtube.com/embed/6pCcPW872BA?si=Fpn7uNhvwe1JDUhV",
       technologies: ["C++", "SFML"],
       description:
@@ -76,107 +111,109 @@ const Projects: React.FC = () => {
     },
   ];
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
+  const visibleProjects =
+    activeTab === "all"
+      ? [...projects].sort((a, b) => a.title.localeCompare(b.title))
+      : projects.filter((project) => project.category === activeTab);
 
   return (
     <section
-      ref={sectionRef}
-      onMouseMove={handleMouseMove}
-      className="relative min-h-screen bg-gradient-to-b from-[#27321F] to-[#849F8C] py-20 px-6 overflow-hidden"
       id="projects"
+      className="relative bg-[#ECE5D8] text-[#172A3A] py-24 px-8 lg:px-12"
     >
-      <motion.div
-        className="relative max-w-6xl mx-auto z-10"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        {/* Title */}
-        <HeaderWithAura
-          text="Technical Projects"
-          className="text-5xl font-bold text-center mb-16 text-[#F6F4D2]"
-          mouseX={mouseX}
-          mouseY={mouseY}
-          variants={itemVariants}
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader
+          number="04"
+          label="Selected Work"
+          title="Technical Projects"
         />
 
-        {/* Projects Grid */}
-        <div className="space-y-16">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} variants={itemVariants} />
+        {/* Tab bar */}
+        <div className="flex flex-wrap gap-2 mb-12 border-b border-[#172A3A]/15">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id)}
+              aria-pressed={activeTab === tab.id}
+              className={`relative px-5 py-3 text-sm font-semibold uppercase tracking-[0.15em] transition-colors duration-300 ${
+                activeTab === tab.id
+                  ? "text-[#9B2D22]"
+                  : "text-[#172A3A]/60 hover:text-[#172A3A]"
+              }`}
+            >
+              {tab.label}
+              {activeTab === tab.id && (
+                <motion.span
+                  layoutId="projectsTabUnderline"
+                  className="absolute left-0 right-0 -bottom-px h-0.5 bg-[#9B2D22]"
+                />
+              )}
+            </button>
           ))}
         </div>
-      </motion.div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.35 }}
+            className={
+              visibleProjects.length > 0
+                ? "grid grid-cols-1 md:grid-cols-2 gap-8"
+                : ""
+            }
+          >
+            {visibleProjects.length > 0 ? (
+              visibleProjects.map((project, index) => (
+                <ProjectCard
+                  key={project.title}
+                  project={project}
+                  index={index}
+                />
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-3 rounded-sm border border-dashed border-[#172A3A]/25 py-20 text-center">
+                <span className="text-3xl">✦</span>
+                <p className="text-lg font-semibold text-[#172A3A]">
+                  Coming soon
+                </p>
+                <p className="max-w-md text-[#172A3A]/60">
+                  New UI/UX work is in progress — check back shortly.
+                </p>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </section>
   );
 };
 
-/* --- Subcomponents --- */
-
-const HeaderWithAura = ({ text, className = "", variants, mouseX, mouseY }: any) => (
-  <motion.h3 className={className} variants={variants}>
-    {splitLetters(text).map((letter: string, i: number) => (
-      <LetterSpan key={i} letter={letter} mouseX={mouseX} mouseY={mouseY} initialColor="#F6F4D2" />
-    ))}
-  </motion.h3>
-);
-
-const LetterSpan = ({ letter, mouseX, mouseY, initialColor }: any) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [color, setColor] = useState(initialColor);
-
-  useEffect(() => {
-    const update = () => {
-      const latestX = mouseX.get();
-      const latestY = mouseY.get();
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      const section = ref.current.closest("section");
-      if (!section) return;
-      const sectionRect = section.getBoundingClientRect();
-      const relX = rect.left + rect.width / 2 - sectionRect.left;
-      const relY = rect.top + rect.height / 2 - sectionRect.top;
-      const distance = Math.hypot(latestX - relX, latestY - relY);
-      const intensity = Math.max(0, 1 - distance / 250);
-      const start = [246, 244, 210];
-      const end = [255, 196, 89];
-      const r = Math.round(start[0] + (end[0] - start[0]) * intensity);
-      const g = Math.round(start[1] + (end[1] - start[1]) * intensity);
-      const b = Math.round(start[2] + (end[2] - start[2]) * intensity);
-      setColor(`rgb(${r},${g},${b})`);
-    };
-    const subX = mouseX.onChange(update);
-    const subY = mouseY.onChange(update);
-    return () => {
-      subX();
-      subY();
-    };
-  }, [mouseX, mouseY]);
-
-  return (
-    <motion.span ref={ref} style={{ color, display: "inline-block" }}>
-      {letter === " " ? "\u00A0" : letter}
-    </motion.span>
-  );
-};
-
-const ProjectCard = ({ project, index, variants }: any) => {
+const ProjectCard = ({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) => {
   return (
     <motion.div
-      variants={variants}
-      className="flex flex-col md:flex-row gap-8 items-center bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl"
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="flex flex-col gap-6 bg-[#172A3A] text-[#EDE4D3] rounded-sm p-6 md:p-8 shadow-xl h-full"
     >
       {/* Project Media */}
-      <div className="w-full md:w-1/2">
-        <div className="relative w-full h-64 md:h-80 rounded-xl overflow-hidden shadow-lg">
+      <div className="w-full">
+        <div className="relative w-full h-56 rounded-sm overflow-hidden shadow-lg">
           {project.video ? (
             <iframe
               src={project.video}
               title={project.title}
-              className="w-full h-full object-cover rounded-xl"
+              className="w-full h-full rounded-sm"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
@@ -185,7 +222,7 @@ const ProjectCard = ({ project, index, variants }: any) => {
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-full object-cover hover:scale-110 transition-transform duration-500 rounded-xl"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 rounded-sm"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </a>
@@ -193,22 +230,26 @@ const ProjectCard = ({ project, index, variants }: any) => {
             <img
               src={project.image}
               alt={project.title}
-              className="w-full h-full object-cover hover:scale-100 transition-transform duration-500 rounded-xl"
+              className="w-full h-full object-cover rounded-sm"
             />
           )}
         </div>
       </div>
 
       {/* Project Info */}
-      <div className="w-full md:w-1/2 space-y-4">
-        <h3 className="text-3xl font-bold text-[#F6F4D2]">{project.title}</h3>
+      <div className="w-full flex flex-col flex-1 space-y-4">
+        <h3 className="text-2xl md:text-3xl font-bold text-[#EDE4D3]">
+          {project.title}
+        </h3>
+
+        <span className="block w-10 h-px bg-[#C2A36B]" />
 
         {/* Technologies */}
         <div className="flex flex-wrap gap-2">
-          {project.technologies.map((tech: string, i: number) => (
+          {project.technologies.map((tech, i) => (
             <span
               key={i}
-              className="px-4 py-2 bg-[#FFC459]/20 text-[#F6F4D2] rounded-full text-sm font-medium border border-[#FFC459]/40"
+              className="px-3 py-1.5 bg-[#C2A36B]/15 text-[#C2A36B] rounded-sm text-xs font-medium border border-[#C2A36B]/30 uppercase tracking-wide"
             >
               {tech}
             </span>
@@ -216,33 +257,34 @@ const ProjectCard = ({ project, index, variants }: any) => {
         </div>
 
         {/* Description */}
-        <p className="text-[#F6F4D2]/90 text-lg leading-relaxed">{project.description}</p>
+        <p className="text-[#EDE4D3]/80 leading-relaxed">
+          {project.description}
+        </p>
 
-        {/* GitHub / Google Drive Link */}
+        {/* Link */}
         {!project.hideButton && project.link && (
           <motion.a
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#FFC459] text-gray-900 px-6 py-3 rounded-full font-semibold shadow-md"
-            whileHover={{ scale: 1.05, backgroundColor: "#FFD380" }}
-            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-2 self-start bg-[#9B2D22] text-[#EDE4D3] px-6 py-3 rounded-sm text-xs font-semibold uppercase tracking-[0.2em] shadow-md mt-2"
+            whileHover={{ scale: 1.04, backgroundColor: "#B23728" }}
+            whileTap={{ scale: 0.96 }}
           >
             {project.title === "Legend of Zelda Temple" ? (
               <img
                 src="/googledrive.png"
                 alt="Google Drive"
-                className="w-5 h-5 object-contain"
+                className="w-4 h-4 object-contain"
               />
             ) : (
               <img
                 src="/github.svg"
                 alt="GitHub"
-                className="w-5 h-5 object-contain"
+                className="w-4 h-4 object-contain invert"
               />
             )}
-            View Project
-            <span>→</span>
+            View Project →
           </motion.a>
         )}
       </div>
