@@ -39,7 +39,7 @@ const Hero: React.FC = () => {
 
             <motion.div custom={1} variants={fadeUp} className="mt-6">
               <p className="text-[#C2A36B] text-sm uppercase tracking-[0.25em] font-semibold">
-                Software Engineer &amp; Designer
+                Software Engineer &amp; UI/UX Designer
               </p>
               <span className="block w-12 h-px bg-[#9B2D22] mt-3" />
             </motion.div>
