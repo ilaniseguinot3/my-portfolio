@@ -33,11 +33,33 @@ const Projects: React.FC = () => {
       link: "https://github.com/PatrickLeimer/Culinara",
     },
     {
+      title: "Thorn & Thistle: Apothecary Simulator",
+      video: "https://www.youtube.com/embed/X6XT0dCsiCk?si=2Yava_ouHokdByr6",
+      technologies: ["Unity", "C#"],
+      description:
+        "Served as Lead Programmer for a cozy apothecary simulation game where players prescribe treatments for customer ailments, delegating development tasks and coordinating gameplay system implementation. Developed backend systems including inventory management, potion crafting logic, and diagnosis mechanics.",
+      link: "https://github.com/ilaniseguinot3/ThornandThistle",
+    },
+    {
       title: "Aetherion: 2D Platformer",
       video: "https://www.youtube.com/embed/iGfUWZmp0jg?si=lF4Z_Odhse5Mcfwt",
       technologies: ["Unity", "C#"],
       description:
         "Developed core mechanics, enemy AI, and level design for a 2D platformer. Integrated original artwork, sound design, and dynamic lighting for immersive gameplay.",
+    },
+    {
+      title: "Java Hollow: VR Forest Café Experience",
+      video: "https://www.youtube.com/embed/Ed-hmlwKeYI?si=ZUk2PRft1R_rxGKN",
+      technologies: [
+        "Unity",
+        "C#",
+        "VR Interaction",
+        "Spatial Audio",
+        "Dynamic Lighting",
+      ],
+      description:
+        "Created an immersive VR café experience set in a forest hollow. Users can fully interact with the coffee station: pour espresso, add milk, refill the machine, and enjoy their virtual drink. Integrated dynamic day/night lighting, realistic ambient sounds, and environmental interactions for a relaxing, engaging experience.",
+      link: "https://github.com/danielromerom/Java-Hollow",
     },
     {
       title: "Legend of Zelda Temple",
@@ -55,20 +77,6 @@ const Projects: React.FC = () => {
       description:
         "Analyzes Netflix-style user data to recommend movies based on genre similarity and user preferences. Features data visualization and JSON export for a frontend interface.",
       link: "https://github.com/vincinious/FlixHabit",
-    },
-    {
-      title: "Java Hollow: VR Forest Café Experience",
-      video: "https://www.youtube.com/embed/Ed-hmlwKeYI?si=ZUk2PRft1R_rxGKN",
-      technologies: [
-        "Unity",
-        "C#",
-        "VR Interaction",
-        "Spatial Audio",
-        "Dynamic Lighting",
-      ],
-      description:
-        "Created an immersive VR café experience set in a forest hollow. Users can fully interact with the coffee station: pour espresso, add milk, refill the machine, and enjoy their virtual drink. Integrated dynamic day/night lighting, realistic ambient sounds, and environmental interactions for a relaxing, engaging experience.",
-      link: "https://github.com/danielromerom/Java-Hollow",
     },
     {
       title: "Minesweeper (C++ & SFML)",

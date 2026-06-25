@@ -7,7 +7,7 @@ const AboutJourney: React.FC = () => {
   const involvements = [
     {
       year: "Summer 2026",
-      title: "Foundations of AI Engineering 110 and Technical Interview Prep 102",
+      title: "Foundations of AI Engineering 110 & Technical Interview Prep 102",
       organization: "Codepath",
       description:
         "Enrolled in CodePath's AI110 and Technical Interview Prep 102, building AI fundamentals and advanced interview problem-solving.",

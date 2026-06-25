@@ -127,6 +127,7 @@ const About: React.FC = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-3">
                     <Info label="Major" value="Computer Science & Digital Arts" />
+                    <Info label="Minor" value="Media Production, Management, and Technology" />
                     <Info label="University" value="University of Florida" />
                     <Info label="GPA" value="3.86 / 4.0" />
                   </div>
@@ -171,7 +172,7 @@ const About: React.FC = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="absolute -bottom-4 -left-4 w-24 h-24 border-l-2 border-b-2 border-[#9B2D22] -z-0" />
+            <span className="absolute top-1/2 left-8 w-0 h-48 border-l-2 border-b-2 border-[#9B2D22] -translate-y-1/2 -z-0" />
           </motion.div>
         </div>
 
