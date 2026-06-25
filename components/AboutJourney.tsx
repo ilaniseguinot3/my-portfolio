@@ -6,15 +6,40 @@ import SectionHeader from "./SectionHeader";
 const AboutJourney: React.FC = () => {
   const involvements = [
     {
-      year: "Fall 2025 - Present",
-      title: "IBM Full Stack Course",
-      organization: "Professional Development",
+      year: "Summer 2026",
+      title: "Foundations of AI Engineering 110 and Technical Interview Prep 102",
+      organization: "Codepath",
       description:
-        "Completing full-stack training focused on React, Node.js, and cloud deployment best practices.",
-      impact: "Built 10+ full-stack projects",
+        "Enrolled in CodePath's AI110 and Technical Interview Prep 102, building AI fundamentals and advanced interview problem-solving.",
+      impact: "Advancing AI and technical interview skills.",
     },
     {
-      year: "Fall 2025 - Present",
+      year: "Spring 2026 - Present",
+      title: "Engineering Leadership Circle",
+      organization: "UF Herbert Wertheim College of Engineering",
+      description:
+        "Selected for UF's Engineering Leadership Circle, an honor society recognizing engineering students who demonstrate exceptional leadership, academic achievement, and service within the college.",
+      impact: "Inducted into UF's engineering leadership honor society.",
+    },
+    {
+      year: "Spring 2026 - Present",
+      title: "Cardiac Data Device Software Developer",
+      organization: "Dream Team Engineering",
+      description:
+        "Built a React Native/Expo app for a wearable cardiac device that surfaces real-time vitals and trends, integrating BLE data alongside hardware and ML sub-teams.",
+      impact:
+        "Synced BLE vitals — blood pressure, heart rate, oxygen & temperature.",
+    },
+    {
+      year: "Spring 2026 - Present",
+      title: "Lead UX/UI Director",
+      organization: "Society of Hispanic Professional Engineers",
+      description:
+         "Set design priorities with the VP of Technology and created Figma wireframes and high-fidelity prototypes across iOS, Android, and web, aligned with SHPE branding.",
+      impact: "Led a team of 7 to design interfaces used by 300+ members across iOS, Android & web.",
+    },
+    {
+      year: "Fall 2025 - Spring 2026",
       title: "Reitz Scholar",
       organization: "University of Florida",
       description:
@@ -23,34 +48,34 @@ const AboutJourney: React.FC = () => {
         "Strengthened leadership skills through faculty and professional mentor 1:1's, service projects, and reflective essays.",
     },
     {
-      year: "Summer 2025 - Present",
+      year: "Summer 2025 - Spring 2026",
       title: "Secretary",
       organization: "Hispanic-Latine Student Association",
       description:
-        "Leading our digital presence by directing the web team to maintain both our public Wix site and a custom React/Firebase member portal.",
-      impact: "Enhanced digital engagement for 500+ members",
-    },
-    {
-      year: "Fall 2024 - Present",
-      title: "UX/UI Director",
-      organization: "Society of Hispanic Professional Engineers",
-      description:
-        "Designing user-friendly website and mobile app interfaces in Figma for over 300 members, making technology more accessible and intuitive.",
-      impact: "Improved user experience for 300+ members",
+        "Supervised organizational operations and digital engagement for 200+ members by managing event logistics and overseeing a communications team that maintained a React/Firebase member portal for attendance tracking and voting eligibility.",
+      impact: "Enhanced digital engagement for 200+ members",
     },
     {
       year: "Spring 2025",
-      title: "Codepath Technical Interview Prep 101",
-      organization: "Professional Development",
+      title: "Technical Interview Prep 101",
+      organization: "Codepath",
       description:
         "Completed CodePath's Technical Interview Prep 101 course, a hands-on program focused on data structures, algorithms, and problem-solving strategies to prepare for technical interviews.",
       impact:
         "Gained practical experience through weekly coding challenges and peer collaboration.",
     },
     {
+      year: "Fall 2024 – Fall 2025",
+      title: "UX/UI Director",
+      organization: "Society of Hispanic Professional Engineers",
+      description:
+        "Designed user-friendly website and mobile app interfaces in Figma for over 300 members, making technology more accessible and intuitive.",
+      impact: "Improved user experience for 300+ members",
+    },
+    {
       year: "Summer 2024 – Spring 2025",
       title: "Mentorship Director",
-      organization: "Member Leadership Program",
+      organization: "Hispanic-Latine Student Association's Member Leadership Program",
       description:
         "Directed the mentorship program, overseeing mentor-mentee pairings and organizing events to foster academic, professional, and personal growth within the Hispanic Student Association.",
       impact:
