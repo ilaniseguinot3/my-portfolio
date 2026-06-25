@@ -98,10 +98,10 @@ const Hero: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.5 }}
             >
               <p className="text-xs uppercase tracking-[0.25em] font-semibold">
-                Based In
+                Student at the
               </p>
               <span className="block w-8 h-px bg-[#172A3A]/40 my-4" />
-              <p className="text-xl font-medium">Gainesville, Florida</p>
+              <p className="text-xl font-medium">University of Florida</p>
               <a
                 href="https://www.linkedin.com/in/ilani-seguinot"
                 target="_blank"
