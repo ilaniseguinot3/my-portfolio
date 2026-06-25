@@ -9,7 +9,7 @@ const Header: React.FC = () => {
   const navItems = [
     { id: "about", label: "About" },
     { id: "journey", label: "Journey" },
-    { id: "projects", label: "Work" },
+    { id: "projects", label: "Projects" },
     { id: "contact", label: "Contact" },
   ];
 
