@@ -52,7 +52,7 @@ const Projects: React.FC = () => {
     {
       title: "Thorn & Thistle: Apothecary Simulator",
       category: "unity",
-      video: "https://www.youtube.com/embed/X6XT0dCsiCk?si=2Yava_ouHokdByr6",
+      video: "https://www.youtube.com/embed/X6XT0dCsiCk?si=eyADp9KwbBy5zlFA",
       technologies: ["Unity", "C#"],
       description:
         "Served as Lead Programmer for a cozy apothecary simulation game where players prescribe treatments for customer ailments, delegating development tasks and coordinating gameplay system implementation. Developed backend systems including inventory management, potion crafting logic, and diagnosis mechanics.",
