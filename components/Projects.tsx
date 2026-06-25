@@ -1,9 +1,14 @@
 "use client";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import SectionHeader from "./SectionHeader";
+
+type Category = "react" | "unity" | "cpp" | "uiux";
+type Tab = "all" | Category;
 
 type Project = {
   title: string;
+  category: Category;
   video?: string;
   image?: string;
   website?: string;
@@ -13,10 +18,21 @@ type Project = {
   hideButton?: boolean;
 };
 
+const tabs: { id: Tab; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "react", label: "React" },
+  { id: "unity", label: "Unity" },
+  { id: "cpp", label: "C++/Java" },
+  { id: "uiux", label: "UI/UX Design" },
+];
+
 const Projects: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<Tab>("all");
+
   const projects: Project[] = [
     {
       title: "Gator Marketplace",
+      category: "react",
       video: "https://www.youtube.com/embed/1UYjbEZ3ttc?si=BwtTr0_wYgSTmpBt",
       technologies: ["React", "Vite", "MongoDB", "Auth0", "CSS", "JavaScript"],
       description:
@@ -25,6 +41,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "Culinara: Meal Planner & Pantry",
+      category: "react",
       video:
         "https://www.youtube.com/embed/DRmWa-gMS98?si=FM2ImqZPlGNtvRWd&amp;start=190",
       technologies: ["React Native", "Expo", "TypeScript", "Supabase"],
@@ -34,6 +51,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "Thorn & Thistle: Apothecary Simulator",
+      category: "unity",
       video: "https://www.youtube.com/embed/X6XT0dCsiCk?si=2Yava_ouHokdByr6",
       technologies: ["Unity", "C#"],
       description:
@@ -42,6 +60,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "Aetherion: 2D Platformer",
+      category: "unity",
       video: "https://www.youtube.com/embed/iGfUWZmp0jg?si=lF4Z_Odhse5Mcfwt",
       technologies: ["Unity", "C#"],
       description:
@@ -49,6 +68,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "Java Hollow: VR Forest Café Experience",
+      category: "unity",
       video: "https://www.youtube.com/embed/Ed-hmlwKeYI?si=ZUk2PRft1R_rxGKN",
       technologies: [
         "Unity",
@@ -63,6 +83,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "Legend of Zelda Temple",
+      category: "unity",
       image: "/zelda.png",
       technologies: ["Blender"],
       description:
@@ -71,6 +92,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "FlixHabit",
+      category: "cpp",
       image: "/flixhabit.png",
       website: "https://flixhabit.netlify.app/",
       technologies: ["C++", "JSON", "Graphs", "MinHeap"],
@@ -80,6 +102,7 @@ const Projects: React.FC = () => {
     },
     {
       title: "Minesweeper (C++ & SFML)",
+      category: "cpp",
       video: "https://www.youtube.com/embed/6pCcPW872BA?si=Fpn7uNhvwe1JDUhV",
       technologies: ["C++", "SFML"],
       description:
@@ -87,6 +110,11 @@ const Projects: React.FC = () => {
       hideButton: true,
     },
   ];
+
+  const visibleProjects =
+    activeTab === "all"
+      ? [...projects].sort((a, b) => a.title.localeCompare(b.title))
+      : projects.filter((project) => project.category === activeTab);
 
   return (
     <section
@@ -100,23 +128,82 @@ const Projects: React.FC = () => {
           title="Technical Projects"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+        {/* Tab bar */}
+        <div className="flex flex-wrap gap-2 mb-12 border-b border-[#172A3A]/15">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id)}
+              aria-pressed={activeTab === tab.id}
+              className={`relative px-5 py-3 text-sm font-semibold uppercase tracking-[0.15em] transition-colors duration-300 ${
+                activeTab === tab.id
+                  ? "text-[#9B2D22]"
+                  : "text-[#172A3A]/60 hover:text-[#172A3A]"
+              }`}
+            >
+              {tab.label}
+              {activeTab === tab.id && (
+                <motion.span
+                  layoutId="projectsTabUnderline"
+                  className="absolute left-0 right-0 -bottom-px h-0.5 bg-[#9B2D22]"
+                />
+              )}
+            </button>
           ))}
         </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.35 }}
+            className={
+              visibleProjects.length > 0
+                ? "grid grid-cols-1 md:grid-cols-2 gap-8"
+                : ""
+            }
+          >
+            {visibleProjects.length > 0 ? (
+              visibleProjects.map((project, index) => (
+                <ProjectCard
+                  key={project.title}
+                  project={project}
+                  index={index}
+                />
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-3 rounded-sm border border-dashed border-[#172A3A]/25 py-20 text-center">
+                <span className="text-3xl">✦</span>
+                <p className="text-lg font-semibold text-[#172A3A]">
+                  Coming soon
+                </p>
+                <p className="max-w-md text-[#172A3A]/60">
+                  New UI/UX work is in progress — check back shortly.
+                </p>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
 };
 
-const ProjectCard = ({ project }: { project: Project }) => {
+const ProjectCard = ({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
       className="flex flex-col gap-6 bg-[#172A3A] text-[#EDE4D3] rounded-sm p-6 md:p-8 shadow-xl h-full"
     >
       {/* Project Media */}
