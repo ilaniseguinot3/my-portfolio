@@ -67,7 +67,7 @@ const Header: React.FC = () => {
         {/* Monogram */}
         <button
           onClick={() => scrollToSection("hero")}
-          className="text-2xl tracking-[0.3em] text-[#EDE4D3] font-bold"
+          className="font-cormorant text-2xl tracking-[0.3em] text-[#EDE4D3] font-bold"
         >
           I<span className="text-[#C2A36B]"> / </span>S
         </button>

@@ -24,7 +24,7 @@ There is no test suite or test runner configured.
 
 Single-page personal portfolio built on the **Next.js App Router** (`app/`) with **React 19**, **Tailwind CSS v4**, and **Framer Motion**.
 
-- `app/layout.tsx` is the only layout: loads the Domine Google font (serif, applied site-wide via the `--font-domine` CSS variable), sets metadata, and mounts Vercel `<Analytics />`.
+- `app/layout.tsx` is the only layout: loads two Google fonts — **Inter** (sans, the site-wide default for the navbar and body text via `--font-inter`) and **Cormorant Garamond** (serif, for the name, large quotes, and standout display headings via `--font-cormorant`) — sets metadata, and mounts Vercel `<Analytics />`. Apply Cormorant to standout text with the `.font-cormorant` utility (defined in `globals.css`); everything else inherits Inter from `body`.
 - `app/page.tsx` is the entire site — it imports and stacks the section components in render order: `Header → Hero → About → AboutJourney → Projects → Contact`. There is no routing, data layer, or CMS; all content is hardcoded inside each component.
 - `app/globals.css` uses Tailwind v4's `@import "tailwindcss"` plus `@theme inline` to register CSS variables (background/foreground, font). Light/dark backgrounds come from a `prefers-color-scheme` media query.
 

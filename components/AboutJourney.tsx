@@ -198,7 +198,7 @@ const TimelineCard = ({
             <div className="text-[#C2A36B] text-sm font-semibold tracking-wide mb-3">
               {item.year}
             </div>
-            <h4 className="text-2xl font-bold text-[#EDE4D3] mb-2">
+            <h4 className="font-cormorant text-2xl font-bold text-[#EDE4D3] mb-2">
               {item.title}
             </h4>
             <p className="text-[#EDE4D3]/70 font-medium mb-4">
