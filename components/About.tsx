@@ -69,7 +69,7 @@ const About: React.FC = () => {
         <div className="mb-24 grid md:grid-cols-2 gap-12 items-center">
           {/* Left: Flippable Card */}
           <div
-            className="relative w-full h-[520px] cursor-pointer"
+            className="relative w-full h-[600px] sm:h-[540px] md:h-[520px] cursor-pointer"
             style={{ perspective: 1000 }}
             onClick={() => setFlipped(!flipped)}
             onMouseEnter={() => setFlipped(true)}
@@ -106,7 +106,7 @@ const About: React.FC = () => {
 
               {/* Back: Student Profile */}
               <div
-                className="absolute w-full h-full bg-[#AE9D80] text-[#172A3A] rounded-sm p-8 shadow-xl"
+                className="absolute w-full h-full overflow-y-auto bg-[#AE9D80] text-[#172A3A] rounded-sm p-6 sm:p-8 shadow-xl"
                 style={{
                   backfaceVisibility: "hidden",
                   transform: "rotateY(180deg)",
@@ -131,7 +131,7 @@ const About: React.FC = () => {
                     <Info label="University" value="University of Florida" />
                     <Info label="GPA" value="3.86 / 4.0" />
                   </div>
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     <Info
                       label="Honors"
                       value={[
