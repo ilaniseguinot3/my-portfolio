@@ -101,6 +101,19 @@ const Projects: React.FC = () => {
       link: "https://github.com/vincinious/FlixHabit",
     },
     {
+      title: "Noted – UX Case Study",
+      category: "uiux",
+      image: "/noted.png",
+      technologies: ["Figma",
+        "UI/UX Design",
+        "Prototyping",
+        "Branding",
+        "Heuristic Analysis",],
+      description:
+        "A self-directed final design report for an original notes mobile app concept. Evaluated the design through Nielsen's usability heuristics, color and typography systems, aesthetic and affordance choices, and a business-facing plan — delivered as high-fidelity mockups with a custom logo.",
+      link: "https://docs.google.com/document/d/16X00m5ZNaFequuANl8OH_Hlq2biiq255LsNnVTJSOYg/edit?tab=t.0#heading=h.b8itf0fn6vc5",
+    },
+    {
       title: "Minesweeper (C++ & SFML)",
       category: "cpp",
       video: "https://www.youtube.com/embed/6pCcPW872BA?si=Fpn7uNhvwe1JDUhV",
@@ -271,7 +284,7 @@ const ProjectCard = ({
             whileHover={{ scale: 1.04, backgroundColor: "#B23728" }}
             whileTap={{ scale: 0.96 }}
           >
-            {project.title === "Legend of Zelda Temple" ? (
+            {project.link?.includes("google.com") ? (
               <img
                 src="/googledrive.png"
                 alt="Google Drive"
