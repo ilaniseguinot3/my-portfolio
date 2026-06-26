@@ -40,7 +40,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
           {label}
         </span>
       </div>
-      <h2 className={`text-4xl sm:text-5xl font-bold ${textColor}`}>{title}</h2>
+      <h2 className={`font-cormorant text-5xl sm:text-6xl font-bold ${textColor}`}>{title}</h2>
     </motion.div>
   );
 };

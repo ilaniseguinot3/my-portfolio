@@ -69,7 +69,7 @@ const About: React.FC = () => {
         <div className="mb-24 grid md:grid-cols-2 gap-12 items-center">
           {/* Left: Flippable Card */}
           <div
-            className="relative w-full h-[520px] cursor-pointer"
+            className="relative w-full h-[600px] sm:h-[540px] md:h-[520px] cursor-pointer"
             style={{ perspective: 1000 }}
             onClick={() => setFlipped(!flipped)}
             onMouseEnter={() => setFlipped(true)}
@@ -86,7 +86,7 @@ const About: React.FC = () => {
                 className="absolute w-full h-full bg-[#172A3A] text-[#EDE4D3] rounded-sm p-8 shadow-xl flex flex-col"
                 style={{ backfaceVisibility: "hidden" }}
               >
-                <h3 className="text-2xl font-bold mb-4">Hi Everyone!</h3>
+                <h3 className="font-cormorant text-3xl font-bold mb-4">Hi Everyone!</h3>
                 <span className="block w-10 h-px bg-[#C2A36B] mb-5" />
                 <p className="text-[#EDE4D3]/85 leading-relaxed">
                   My technology journey began in middle school robotics, where I
@@ -106,7 +106,7 @@ const About: React.FC = () => {
 
               {/* Back: Student Profile */}
               <div
-                className="absolute w-full h-full bg-[#AE9D80] text-[#172A3A] rounded-sm p-8 shadow-xl"
+                className="absolute w-full h-full overflow-y-auto bg-[#AE9D80] text-[#172A3A] rounded-sm p-6 sm:p-8 shadow-xl"
                 style={{
                   backfaceVisibility: "hidden",
                   transform: "rotateY(180deg)",
@@ -114,7 +114,7 @@ const About: React.FC = () => {
               >
                 <div className="flex items-center justify-between mb-4 pb-4 border-b border-[#172A3A]/20">
                   <div>
-                    <h3 className="text-2xl font-bold">Ilani Seguinot</h3>
+                    <h3 className="font-cormorant text-3xl font-bold">Ilani Seguinot</h3>
                     <p className="text-[#9B2D22] font-semibold text-sm uppercase tracking-[0.15em]">
                       Student Profile
                     </p>
@@ -131,7 +131,7 @@ const About: React.FC = () => {
                     <Info label="University" value="University of Florida" />
                     <Info label="GPA" value="3.86 / 4.0" />
                   </div>
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     <Info
                       label="Honors"
                       value={[

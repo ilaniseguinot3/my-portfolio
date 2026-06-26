@@ -11,7 +11,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-domine: var(--font-domine);
+  --font-manrope: var(--font-manrope);
+  --font-cormorantgaramound: var(--font-cormorantgaramound);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,9 +22,14 @@
   }
 }
 
-/* Use Domine for entire site */
+/* Inter is the default for navbar + main body text */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-domine), serif;
+  font-family: var(--font-manrope), sans-serif;
+}
+
+/* Cormorant Garamond for the name, large quotes, and standout display text */
+.font-cormorant {
+  font-family: var(--font-cormorantgaramound), serif;
 }

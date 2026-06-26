@@ -31,7 +31,7 @@ const Contact: React.FC = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="text-center md:text-left"
           >
-            <h3 className="text-3xl font-bold mb-4">
+            <h3 className="font-cormorant text-4xl font-bold mb-4">
               Want to work together or just say hi?
             </h3>
             <span className="block w-12 h-px bg-[#C2A36B] mb-6 mx-auto md:mx-0" />

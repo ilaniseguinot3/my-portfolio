@@ -30,7 +30,7 @@ const Hero: React.FC = () => {
             <motion.h1
               custom={0}
               variants={fadeUp}
-              className="text-6xl sm:text-7xl lg:text-8xl font-bold leading-[0.95]"
+              className="font-cormorant text-6xl sm:text-7xl lg:text-8xl font-bold leading-[0.95]"
             >
               Ilani
               <br />
@@ -122,7 +122,7 @@ const Hero: React.FC = () => {
                 01
               </span>
               <div className="w-px h-16 bg-[#172A3A]/30" />
-              <p className="text-2xl lg:text-3xl max-w-xl leading-snug">
+              <p className="font-cormorant text-3xl lg:text-4xl max-w-xl leading-snug">
                 I design and build beautiful, functional things for the web.
               </p>
             </div>

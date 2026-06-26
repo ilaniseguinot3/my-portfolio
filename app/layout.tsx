@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
-import { Domine } from "next/font/google"; // <-- add this
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
 
-const domine = Domine({
+// Manrope: navbar + main body text
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-domine", // CSS variable for Tailwind/Global use
-  weight: ["400", "700"],    // optional: choose weights you want
+  variable: "--font-manrope",
+});
+
+// Cormorant Garamond: name, large quotes, and standout display text
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-cormorantgaramound",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -19,7 +26,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${domine.variable} antialiased`}>
+      <body className={`${manrope.variable} ${cormorant.variable} antialiased`}>
         {children}
         <Analytics />
       </body>
