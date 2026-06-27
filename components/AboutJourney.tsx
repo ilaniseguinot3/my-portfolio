@@ -181,6 +181,7 @@ const TimelineCard = ({
       <div
         className="relative h-72 sm:h-64 md:h-60 cursor-pointer"
         style={{ perspective: 1000 }}
+        onClick={() => setFlip((prev) => !prev)}
         onMouseEnter={() => setFlip(true)}
         onMouseLeave={() => setFlip(false)}
       >
@@ -205,7 +206,7 @@ const TimelineCard = ({
               {item.organization}
             </p>
             <p className="mt-auto text-xs uppercase tracking-[0.2em] text-[#EDE4D3]/50">
-              Hover to learn more →
+              Tap to learn more →
             </p>
           </div>
 

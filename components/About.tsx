@@ -100,7 +100,7 @@ const About: React.FC = () => {
                   meaningful impact.
                 </p>
                 <p className="mt-auto pt-6 text-xs uppercase tracking-[0.2em] text-[#C2A36B]">
-                  Hover to flip my student profile →
+                  Tap to flip my student profile →
                 </p>
               </div>
 
@@ -126,7 +126,7 @@ const About: React.FC = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-3">
-                    <Info label="Major" value="Computer Science & Digital Arts" />
+                    <Info label="Major" value="Computer Science & Digital Arts and Sciences" />
                     <Info label="Minor" value="Media Production, Management, and Technology" />
                     <Info label="University" value="University of Florida" />
                     <Info label="GPA" value="3.86 / 4.0" />
